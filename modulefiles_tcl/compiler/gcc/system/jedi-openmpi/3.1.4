@@ -1,0 +1,25 @@
+#%Module######################################################################
+##
+##      Open mpi
+##
+proc ModulesHelp { } {
+        puts stderr "set up Open mpi module paths"
+}
+
+set base /g/data/dp9/jtl548/opt/modules
+set name openmpi
+set ver 3.1.4
+
+prereq jedi-gcc
+
+module load openmpi/3.1.4
+
+prepend-path MODULEPATH $base/modulefiles/mpi/gcc/system/$name/$ver
+
+setenv "MPI_FC"   "mpifort"
+setenv "MPI_CC"   "mpicc"
+setenv "MPI_CXX"  "mpicxx"
+
+unset base
+unset name
+unset ver
