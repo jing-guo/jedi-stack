@@ -1,0 +1,27 @@
+#%Module######################################################################
+##
+##      pdtoolkit
+##
+proc ModulesHelp { } {
+        puts stderr "Load pdtoolkit"
+}
+
+set comp gcc-system
+set name pdtoolkit
+set ver 3.25.1
+set base /g/data/dp9/jtl548/opt/modules/$comp/$name/$ver
+
+prepend-path LD_LIBRARY_PATH $base/lib
+prepend-path LIBRARY_PATH $base/lib
+
+setenv "PDT_ROOT"  $base
+setenv "PDT_PATH"  $base
+setenv "PDT_DIR"  $base
+setenv "PDT_INCLUDES"  $base/x86_64/include
+setenv "PDT_LIBRARIES" $base/x86_64/lib
+setenv "PDT_VERSION"  $ver
+
+unset comp
+unset name
+unset ver
+unset base
