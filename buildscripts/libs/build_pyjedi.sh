@@ -17,26 +17,29 @@ name="pyjedi"
 module unload python2 python3
 module load python2/2.7.17
 
-$SUDO python -m pip install -U pip setuptools
-$SUDO python -m pip install -U numpy
-$SUDO python -m pip install -U wheel netCDF4 matplotlib
+# NCI
+# pip-install first checks the system package location to see if packages are
+# needed to be upgraded; --ignore-installed forces pip-install to not do this check.
+# To be safe use --force-reinstall to do a fresh install
+$SUDO python -m pip install --force-reinstall --ignore-installed --prefix ${OPT}/pyjedi pip setuptools
+$SUDO python -m pip install --force-reinstall --ignore-installed --prefix ${OPT}/pyjedi numpy
+$SUDO python -m pip install --force-reinstall --ignore-installed --prefix ${OPT}/pyjedi wheel netCDF4 matplotlib
 
 # force the use of Python3 before installing Python3 packages
 module unload python2 python3
 module load python3/3.7.4
 
 # NCI
-# Python3 pip does not seem to automatically install packages under user's .local/
-# so "--user" is added
-$SUDO python3 -m pip install -U --user pip setuptools
-$SUDO python3 -m pip install -U --user numpy
-$SUDO python3 -m pip install -U --user wheel netCDF4 matplotlib
-$SUDO python3 -m pip install -U --user pandas
-$SUDO python3 -m pip install -U --user pycodestyle
-$SUDO python3 -m pip install -U --user autopep8
-$SUDO python3 -m pip install -U --user cffi
-$SUDO python3 -m pip install -U --user pycparser
-$SUDO python3 -m pip install -U --user pytest
+# see above
+$SUDO python3 -m pip install --force-reinstall --ignore-installed --prefix ${OPT}/pyjedi pip setuptools
+$SUDO python3 -m pip install --force-reinstall --ignore-installed --prefix ${OPT}/pyjedi numpy
+$SUDO python3 -m pip install --force-reinstall --ignore-installed --prefix ${OPT}/pyjedi wheel netCDF4 matplotlib
+$SUDO python3 -m pip install --force-reinstall --ignore-installed --prefix ${OPT}/pyjedi pandas
+$SUDO python3 -m pip install --force-reinstall --ignore-installed --prefix ${OPT}/pyjedi pycodestyle
+$SUDO python3 -m pip install --force-reinstall --ignore-installed --prefix ${OPT}/pyjedi autopep8
+$SUDO python3 -m pip install --force-reinstall --ignore-installed --prefix ${OPT}/pyjedi cffi
+$SUDO python3 -m pip install --force-reinstall --ignore-installed --prefix ${OPT}/pyjedi pycparser
+$SUDO python3 -m pip install --force-reinstall --ignore-installed --prefix ${OPT}/pyjedi pytest
 
 #####################################################################
 # ncepbufr for python
@@ -55,25 +58,19 @@ if [[ $USE_SUDO =~ [yYtT] ]]
 then
     $SUDO python setup.py install
 else
-    python setup.py install --user
+    python setup.py install --prefix ${OPT}/pyjedi
 fi
 
 # force the use of Python3 before installing Python3 packages
 module unload python2 python3
 module load python3/3.7.4
 
-# Python module search path seems to have "$HOME/.local/lib/python2.7" first and
-# so during the command, "python3 setup.py build" Python2 modules are picked up
-# first. To prevent this and to force the command to use Python3 following is
-# added
-export PYTHONPATH=${HOME}/.local/lib/python3.7/site-packages
-
 CC=gcc python3 setup.py build 
 if [[ $USE_SUDO =~ [yYtT] ]]
 then
     $SUDO python3 setup.py install
 else
-    python3 setup.py install --user
+    python3 setup.py install --prefix ${OPT}/pyjedi
 fi
 
 exit 0
