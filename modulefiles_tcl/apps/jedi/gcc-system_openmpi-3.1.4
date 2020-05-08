@@ -8,8 +8,13 @@ proc ModulesHelp { } {
 
 module load cmake/3.16.2
 module load git/2.24.1
-module load python2/2.7.17
 module load python3/3.7.4
+module load python3-as-python
+
+# prepend the path to pyjedi (the Python packages installed separately from
+# system packages)
+setenv PATH $env(OPT)/pyjedi/bin:$env(PATH)
+setenv PYTHONPATH $env(OPT)/pyjedi/lib/python3.7/site-packages
 
 module use /g/data/dp9/jtl548/opt/modules/modulefiles/core
 

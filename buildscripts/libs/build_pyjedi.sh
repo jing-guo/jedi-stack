@@ -13,24 +13,14 @@ name="pyjedi"
 # Python Package installs
 #####################################################################
 
-# force the use of Python2 before installing Python2 packages
-module unload python2 python3
-module load python2/2.7.17
-
-# NCI
-# pip-install first checks the system package location to see if packages are
-# needed to be upgraded; --ignore-installed forces pip-install to not do this check.
-# To be safe use --force-reinstall to do a fresh install
-$SUDO python -m pip install --force-reinstall --ignore-installed --prefix ${OPT}/pyjedi pip setuptools
-$SUDO python -m pip install --force-reinstall --ignore-installed --prefix ${OPT}/pyjedi numpy
-$SUDO python -m pip install --force-reinstall --ignore-installed --prefix ${OPT}/pyjedi wheel netCDF4 matplotlib
-
 # force the use of Python3 before installing Python3 packages
 module unload python2 python3
 module load python3/3.7.4
 
 # NCI
-# see above
+# pip-install first checks the system package location to see if packages are
+# needed to be upgraded; --ignore-installed forces pip-install to not do this check.
+# To be safe use --force-reinstall to do a fresh install
 $SUDO python3 -m pip install --force-reinstall --ignore-installed --prefix ${OPT}/pyjedi pip setuptools
 $SUDO python3 -m pip install --force-reinstall --ignore-installed --prefix ${OPT}/pyjedi numpy
 $SUDO python3 -m pip install --force-reinstall --ignore-installed --prefix ${OPT}/pyjedi wheel netCDF4 matplotlib
@@ -48,18 +38,6 @@ $SUDO python3 -m pip install --force-reinstall --ignore-installed --prefix ${OPT
 cd ${JEDI_STACK_ROOT}/${PKGDIR:-"pkg"}
 git clone https://github.com/JCSDA/py-ncepbufr.git 
 cd py-ncepbufr 
-
-# force the use of Python2 before installing Python2 packages
-module unload python2 python3
-module load python2/2.7.17
-
-CC=gcc python setup.py build 
-if [[ $USE_SUDO =~ [yYtT] ]]
-then
-    $SUDO python setup.py install
-else
-    python setup.py install --prefix ${OPT}/pyjedi
-fi
 
 # force the use of Python3 before installing Python3 packages
 module unload python2 python3
