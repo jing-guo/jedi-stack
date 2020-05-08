@@ -102,7 +102,7 @@ mkdir -p build && cd build
 ../configure --prefix=$prefix $extra_conf --disable-dap-remote-tests
 
 make -j${NTHREADS:-4}
-[[ $MAKE_CHECK =~ [yYtT] ]] && make check
+[[ $MAKE_CHECK =~ [yYtT] && $MAKE_CHECK_NETCDF =~ [yYtT] ]] && make check
 $SUDO make install
 
 export LDFLAGS+=" -L$prefix/lib"
@@ -136,7 +136,7 @@ mkdir -p build && cd build
 ../configure --prefix=$prefix $extra_conf
 
 make -j${NTHREADS:-4}
-[[ $MAKE_CHECK =~ [yYtT] ]] && make check
+[[ $MAKE_CHECK =~ [yYtT] && $MAKE_CHECK_NETCDF =~ [yYtT] ]] && make check
 $SUDO make install
 
 cd $curr_dir
@@ -159,7 +159,7 @@ mkdir -p build && cd build
 ../configure --prefix=$prefix
 
 make -j${NTHREADS:-4}
-[[ $MAKE_CHECK =~ [yYtT] ]] && make check
+[[ $MAKE_CHECK =~ [yYtT] && $MAKE_CHECK_NETCDF =~ [yYtT] ]] && make check
 $SUDO make install
 
 $MODULES || echo $software >> ${JEDI_STACK_ROOT}/jedi-stack-contents.log

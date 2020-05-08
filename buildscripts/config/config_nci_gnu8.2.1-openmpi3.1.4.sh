@@ -28,6 +28,11 @@ export LOGDIR=buildscripts/log
 export OVERWRITE=N
 export NTHREADS=4
 export   MAKE_CHECK=Y
+# NCI
+# some NetCDF tests use MPI and MPI jobs cannot be launched from Gadi login nodes;
+# so disable tests
+# N.B. make sure tests are run manaully after the jedi-stack build finishes
+export   MAKE_CHECK_NETCDF=N
 export MAKE_VERBOSE=Y
 export   MAKE_CLEAN=N
 export DOWNLOAD_ONLY=N
