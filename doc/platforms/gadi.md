@@ -193,7 +193,7 @@ core/  gcc-system/  modulefiles/ pyjedi/
 
 ## Build and test ufo-bundle
 
-Source used for test is https://github.com/JCSDA/ufo-bundle develop branch at 25d25ff0
+Source used for test is https://github.com/JCSDA/ufo-bundle develop branch at 5599d7e
 
 To set up jedi-stack environment,
 
@@ -246,7 +246,7 @@ The following tests FAILED:
 
 ## Build and test fv3-bundle
 
-Source used for test is https://github.com/JCSDA/fv3-bundle develop branch at 2c3d9dff
+Source used for test is https://github.com/JCSDA/fv3-bundle develop branch at e83083f
 
 Same runtime environment as for ufo-bundle.
 
