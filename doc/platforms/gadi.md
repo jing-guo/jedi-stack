@@ -6,17 +6,16 @@ To build and install JEDI software stack on Gadi I followed the README.md that i
 
 1. Most of the software packages mentioned in README.md are already available on Gadi,
    * Some are available from /bin (e.g. wget, curl); others are available through modulefiles
-   * I updated my `.bash_profile` to load those which are available natively
    * Note `setup_environment.sh` is only for a Linux machine with a bare minimum software stack and where you have the root privilege; so for Gadi this script was not used
    * I used Python3 as recommended by Mark Miesch
    * the modulefile for MKL sets up environments for ScaLAPACK, LAPACK and BLAS
    * git-flow is not needed to build jedi-stack
-   * Doxygen is available from /bin; I asked Wenming to install Graphviz under ~access
-   * only gdb (GNU debugger) is available on Gadi; others - kdbg and valgrind - are not; Yash advises we don't need them but there might be problems later (?)
+   * Doxygen is available from /bin; I asked Wenming to install Graphviz under ~access (**ToDo.** Wenming)
+   * only gdb (GNU debugger) is available on Gadi; others (kdbg and valgrind) are not; Yaswant Pradhan (UKMO) advises we don't need them but there might be problems later (?)
    * I'm using parallel versions of HDF5 and NETCDF: `hdf5/1.10.5p` and `netcdf/4.7.1p`
 
 2. Since I do not have root privilege I am installing modulefiles on `/g/data/dp9/jtl548/opt/modules`
-   * I put `export OPT=/g/data/dp9/jtl548/opt/modules` in my .bash_profile
+   * I put `export OPT=/g/data/dp9/jtl548/opt/modules` in my .bash_profile. (**ToDo.** This needs changing when deploying jedi-stack for a general use)
 
 ## Step 2: Configure Build
 
@@ -24,7 +23,7 @@ To build and install JEDI software stack on Gadi I followed the README.md that i
 
 ## Step 3: Set Up Compiler, MPI, and Module System
 
-`setup_modules.sh` copies basic modulefiles which only depend on compiler and MPI (?). Following is a command issued for NCI using Gnu compilers with Open MPI,
+`setup_modules.sh` copies all modulefiles to $OPT/modulefiles. Some of these modulefiles are needed during the jedi-stack build and others are needed to set up JEDI run-time environment. Modulefiles are separated into subdirectories underneath $OPT/modulefiles according to their dependence on compiler and MPI. Following is a command issued for NCI using Gnu compilers with Open MPI,
 
 ```
 cd buildscripts
@@ -47,32 +46,55 @@ After running `setup_modules.sh` I have edited relevant `libs/build_*` scripts.
 
 Modulefiles created during the build are loaded by the individual `libs/build_*` scripts and the modulefiles contain lines adding appropriate paths to MODULEPATH (jedi-*????).
 
-### HDF5
-
-I tried to build hdf5 as the NCI-installed hdf5 libraries had unusual names - similar to netddf. However there was problem with shmem and fabric (?). So I decided to use the native hdf5
-
 ### NetCDF
 
 * Based on advice from Mark Miesch initially I decided to use the native pnetcdf and netcdf builds rather than building my own pnetcdf and netcdf. However it turned out that NCI did not build its native netcdf (e.g. `netcdf/4.7.1p`) with pnetcdf parallel IO support.
-* Then Mark advised me that netcdf with pnetcdf parallel IO support is not needed unless we would be working with older netcdf formats ([his email](/jintaglee/jedi-stack/wiki/EmailFromMarkMiesch_2)). So at this point I decided to use the native netcdf which lacks the pnetnet-enabled parallel IO support
+* Then Mark advised me that netcdf with pnetcdf parallel IO support is not needed unless we would be working with older netcdf formats (email from Mark, 12/3/20). So at this point I decided to use the native netcdf which lacks the pnetnet-enabled parallel IO support
 * Subsequently when building ufo-bundle ecbuild failed as it could not find the native netcdf library: the way NCI named the netcdf libraries was unusual and ecbuild's `FindNetCDF4.cmake` failed to find the libraries. To get around this problem I switched on the building of netcdf so that the library is built with the usual names
-* When running `make check` to test for the correctness of netcdf build you might see warning messsages like,
+* When running `make check` to test for the correctness of netcdf build you might see warning and error messages like,
   ```
   [gadi-login-01.gadi.nci.org.au:07121] shmem: posix: file name search - max attempts exceeded.cannot continue with posix.
   --------------------------------------------------------------------------
   WARNING: There was an error initializing an OpenFabrics device.
+
+  Local host:   gadi-login-03
+  Local device: mlx5_0
+  --------------------------------------------------------------------------
+  2       2.14373 5.00875e+08
+  [gadi-login-03.gadi.nci.org.au:14295] 1 more process has sent help message help-mpi-btl-openib.txt / error in device init
+  [gadi-login-03.gadi.nci.org.au:14295] Set MCA parameter "orte_base_help_aggregate" to 0 to see all help / error messages
+  ```
+  The first message is caused by a limit on shared memory namespace when running a non-batch job. The second message is caused by the version of the OpenMPI not supporting Gadi's interconnect. This error occurs because `make check` uses MPI launcher - mpirun or mpiexec - to run MPI test jobs on a Gadi login node. To run the MPI tests of netcdf C library build you will need to modify the test script. Here's an instruction on how to modify the test script,
+
+  In `<TOP_DIR_JEDI_STACK>/pkg/netcdf-c-4.7.0/build/nc_test4/run_par_test.sh` change the following line,
+  ```
+  mpiexec -n 16 ./tst_parallel3
+  ```
+  to,
+  ```
+  qsub -q express -l walltime=00:05:00,mem=192G,ncpus=48 -l wd -l storage=scratch/access+scratch/dp9+gdata/access+gdata/dp9+gdata/hh5 -V -- mpiexec -n 16 ./tst_parallel3
   ```
 
-  This is because `make check` uses MPI launcher - mpirun or mpiexec - to run MPI test jobs on a Gadi login node. You might like to run `make check` manually on a compute node after making sure the compile-time environment is correct set (see `libs/build_netcdf.sh` for compile-time environment)
+  The script, `run_par_test.sh` will run as a batch job and also it will use OpenMPI that uses Gadi interconnect.
+
+  Then run `make ckeck`
+
+  See https://track.nci.org.au/servicedesk/customer/portal/5/HELP-169370 for further details. 
+
+  In summary, for netcdf use `MAKE_CHECK_NETCDF=N` in NCI configuration (this is default for the NCI configuration, `config_nci_gnu8.2.1-openmpi3.1.4.sh`). After the jedi-stack build completes follow the instruction above to run netcdf C parallel tests.
+
+### HDF5
+
+I tried to build hdf5 as the NCI-installed hdf5 libraries had unusual names - similar to netcdf. However there was problem with shmem and fabric (?). So I decided to use the native hdf5
 
 ### Atlas
 
-This package was not built based on the advice from Mark - see [email](/jintaglee/jedi-stack/wiki/EmailFromMarkMiesch_3) from Mark.
+This package was not built based on the advice from Mark (email from Mark on 17/3/20)
 
 ### ODC, Odyssesy and Armadillo
 
-Based on advice from Mark Miesch ([his email](/jintaglee/jedi-stack/wiki/EmailFromMarkMiesch)) I decided not to build ODC, Odyssey and Armadillo,
-   * if and when I decide to build ODC (JCSDA ODC reporitory is private which means I don't have access to it using my GitHub account) and Odyssey there is a partially completed modulefile for Odyssey (modulefiles_tcl/mpi/gcc/system/openmpi/4.0.2/odyssey/jcsda-develop). See email from Mark Miesch
+Based on advice from Mark Miesch (email from Mark on 6/3/20) I decided not to build ODC, Odyssey and Armadillo,
+   * if and when I decide to build ODC (JCSDA ODC reporitory is private which means I don't have access to it using my GitHub account) and Odyssey there is a partially completed modulefile for Odyssey (modulefiles_tcl/mpi/gcc/system/openmpi/4.0.2/odyssey/jcsda-develop).
 
 ### PIO
 
@@ -81,18 +103,18 @@ Parallel IO (pio) library was not built as this is only needed in MPAS model bun
 ### pyjedi
 
 `libs/build_pyjedi.sh` builds and installs,
-  * Various Python2 and Python3 packages under `../.local/lib/python*/site-packages`.
+  * Python3 packages under $OPT/pyjedi
   * py-ncepbufr - used to read NCEP Bufr files
 
-See [email](/jintaglee/jedi-stack/wiki/EmailFromMarkMiesch_3) from Mark.
+See email from Mark on 17/3/20 and more recent on 30/4/20 informing that Python2 was dropped from JEDI.
 
 ### ESMF
 
-This package was not built based on the advice from Mark - see [email](/jintaglee/jedi-stack/wiki/EmailFromMarkMiesch_3) from Mark.
+This package was not built based on the advice from Mark (see email from Mark on 17/3/20).
 
 ### Baselibs
 
-This package was not built based on the advice from Mark - see [email](/jintaglee/jedi-stack/wiki/EmailFromMarkMiesch_3) from Mark.
+This package was not built based on the advice from Mark (see email from Mark on 17/3/20).
 
 ### Native libraries
 
@@ -121,8 +143,8 @@ module load gcc/system            # GNU compiler
 module load openmpi/3.1.4         # or openmpi/4.0.2 - when building nceplibs - e.g. mpif90
 module load cmake/3.16.2          # this is to enable the use of later version of CMake which is compatible with bufrlib CMakeLists.txt; **Note.** `libs/build_bufrlib.sh` doesn't have a `module load cmake/<version>` so the module load has to be done outside of the script
 module load git/2.24.1            # this newer modulefile allows the use of git-lfs
-module load python2/2.7.17        # 2 sets of Python packages are installed: Python2 and Python3
 module load python3/3.7.4         # use this version of Python3 unless packages use other Python versions
+module load python3-as-python     # to allow both python and python3 in script shebang
 ```
 
 Following is a command issued for NCI using Gnu compilers with Open MPI,
@@ -131,6 +153,17 @@ Following is a command issued for NCI using Gnu compilers with Open MPI,
 cd buildscripts
 build_stack.sh nci_gnu8.2.1-openmpi3.1.4.sh > out.txt 2>err.txt &
 ```
+### Installation directory
+
+After a successful build/installation you should see the following directories under $OPT (=/g/data/dp9/jtl548/opt/modules in my case),
+
+```
+core/  gcc-system/  modulefiles/ pyjedi/
+```
+### Possible problems during build
+
+* For a complete new build you may want to delete all files underneath <TOP_DIR_JEDI_STACK>/pkg
+* On a rare occasion during jedi-stack build (or even the building of subsystem) job may fail without any reason. Re-running seems to solve the problem.
 
 ## Remaining Issues
 
@@ -172,38 +205,33 @@ module use /g/data/dp9/jtl548/opt/modules/modulefiles/apps  # prepend this locat
 module load jedi/gcc-system_openmpi-3.1.4                   # top-level modulefile
 ```
 
-ecbuild and make succeed. CTest nearly succeeds with 7 failures,
+ecbuild and make succeed. CTest nearly succeeds with 2 failures,
 
 ```
-99% tests passed, 7 tests failed out of 612
+99% tests passed, 2 tests failed out of 597
 
 Subproject Time Summary:
-fckit    =   2.23 sec*proc (13 tests)
-gsw      =   0.27 sec*proc (2 tests)
-ioda     =   9.53 sec*proc (14 tests)
-oops     =  89.98 sec*proc (256 tests)
-saber    = 137.11 sec*proc (106 tests)
-ufo      = 266.17 sec*proc (116 tests)
+fckit    =   4.95 sec*proc (13 tests)
+gsw      =   0.25 sec*proc (2 tests)
+ioda     =  18.46 sec*proc (15 tests)
+oops     = 150.08 sec*proc (158 tests)
+saber    = 286.89 sec*proc (160 tests)
+ufo      = 517.85 sec*proc (132 tests)
 
 Label Time Summary:
-atlas            =  33.94 sec*proc (105 tests)
-download_data    =  16.00 sec*proc (4 tests)
-executable       = 101.70 sec*proc (182 tests)
-fortran          =   5.10 sec*proc (34 tests)
-mpi              = 163.55 sec*proc (106 tests)
-openmp           = 141.98 sec*proc (106 tests)
-script           = 421.54 sec*proc (426 tests)
+atlas            =  59.07 sec*proc (117 tests)
+download_data    =  18.32 sec*proc (2 tests)
+executable       = 174.75 sec*proc (212 tests)
+fortran          =   8.37 sec*proc (33 tests)
+mpi              = 284.60 sec*proc (120 tests)
+openmp           = 291.99 sec*proc (118 tests)
+script           = 844.49 sec*proc (383 tests)
 
-Total Test time (real) = 541.14 sec
+Total Test time (real) = 1045.45 sec
 
 The following tests FAILED:
-        140 - test_bump_hdiag-nicas_mask_check_1-1_compare (Failed)
-        142 - test_bump_hdiag-nicas_network_1-1_compare (Failed)
-        192 - test_bump_hdiag-nicas_mask_check_2-1_compare (Failed)
-        194 - test_bump_hdiag-nicas_network_2-1_compare (Failed)
-        473 - test_qg_4dvar_saddlepoint_compare (Failed)
-        484 - get_ioda_test_data (Failed)
-        498 - get_ioda_test_data_ufo (Failed)
+	282 - test_qg_4dvar_rpcg (Failed)
+	283 - test_qg_4dvar_saddlepoint (Failed)
 ```
 
 ### Remaining problems
@@ -222,36 +250,31 @@ Source used for test is https://github.com/JCSDA/fv3-bundle develop branch at 2c
 
 Same runtime environment as for ufo-bundle.
 
-ecbuild and make succeed. CTest nearly succeeds with 6 failures,
+ecbuild and make succeed. CTest nearly succeeds with 2 failures,
 
 ```
-99% tests passed, 6 tests failed out of 808
+99% tests passed, 2 tests failed out of 699
 
 Label Time Summary:
-atlas            =  52.75 sec*proc (105 tests)
-download_data    = 1325.12 sec*proc (6 tests)
-eckit            = 1307.48 sec*proc (114 tests)
-executable       = 158.37 sec*proc (285 tests)
-fckit            =   2.41 sec*proc (13 tests)
-femps            =  13.61 sec*proc (1 test)
-fortran          =   6.71 sec*proc (34 tests)
-fv3-jedi         = 773.54 sec*proc (86 tests)
-fv3jedi          = 777.10 sec*proc (87 tests)
-ioda             =  17.72 sec*proc (14 tests)
-mpi              = 938.67 sec*proc (171 tests)
-oops             = 100.47 sec*proc (256 tests)
-openmp           = 138.36 sec*proc (106 tests)
-saber            = 145.09 sec*proc (106 tests)
-script           = 1337.70 sec*proc (517 tests)
-ufo              = 404.57 sec*proc (112 tests)
+atlas            =  31.18 sec*proc (117 tests)
+download_data    =  50.57 sec*proc (2 tests)
+executable       = 165.48 sec*proc (214 tests)
+fckit            =   1.62 sec*proc (13 tests)
+femps            =  15.56 sec*proc (1 test)
+fortran          =   3.30 sec*proc (33 tests)
+fv3-jedi         = 1413.45 sec*proc (104 tests)
+fv3jedi          = 1420.05 sec*proc (105 tests)
+ioda             =  16.07 sec*proc (15 tests)
+mpi              = 1781.79 sec*proc (193 tests)
+oops             =  80.00 sec*proc (158 tests)
+openmp           = 348.93 sec*proc (118 tests)
+saber            = 402.08 sec*proc (160 tests)
+script           = 2197.10 sec*proc (483 tests)
+ufo              = 446.60 sec*proc (130 tests)
 
-Total Test time (real) = 2829.83 sec
+Total Test time (real) = 2420.15 sec
 
 The following tests FAILED:
-        254 - test_bump_hdiag-nicas_mask_check_1-1_compare (Failed)
-        256 - test_bump_hdiag-nicas_network_1-1_compare (Failed)
-        306 - test_bump_hdiag-nicas_mask_check_2-1_compare (Failed)
-        308 - test_bump_hdiag-nicas_network_2-1_compare (Failed)
-        587 - test_qg_4dvar_saddlepoint_compare (Failed)
-        804 - test_fv3jedi_eda_3dvar_gfs (Failed)
+	283 - test_qg_4dvar_saddlepoint (Failed)
+	621 - test_fv3jedi_linvarcha_gfs (Failed)
 ```
