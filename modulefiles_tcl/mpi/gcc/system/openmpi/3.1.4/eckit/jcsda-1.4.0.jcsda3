@@ -10,7 +10,7 @@ set comp gcc-system
 set mpi openmpi-3.1.4
 set name eckit
 set ver jcsda-1.4.0.jcsda3
-set base /g/data/dp9/jtl548/opt/modules/$comp/$mpi/$name/$ver
+set base $env(OPT)/$comp/$mpi/$name/$ver
 
 module load netcdf/4.7.0
 module load ecbuild

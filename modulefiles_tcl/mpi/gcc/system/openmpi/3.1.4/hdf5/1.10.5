@@ -11,7 +11,7 @@ set comp gcc-system
 set mpi openmpi-3.1.4
 set name hdf5
 set ver 1.10.5
-set base /g/data/dp9/jtl548/opt/modules/$comp/$mpi/$name/$ver
+set base $env(OPT)/$comp/$mpi/$name/$ver
 
 prepend-path "PATH" $base/bin 
 prepend-path "LD_LIBRARY_PATH" $base/lib

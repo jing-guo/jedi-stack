@@ -6,7 +6,7 @@ proc ModulesHelp { } {
         puts stderr "Load gnu compilers"
 }
 
-set base /g/data/dp9/jtl548/opt/modules
+set base $env(OPT)
 set name gcc
 set ver system
 

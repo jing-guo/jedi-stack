@@ -10,7 +10,7 @@ set comp gcc-system
 set mpi openmpi-3.1.4
 set name odc
 set ver jcsda-develop
-set base /g/data/dp9/jtl548/opt/modules/$comp/$mpi/$name/$ver
+set base $env(OPT)/$comp/$mpi/$name/$ver
 
 module load ecbuild
 module load eckit

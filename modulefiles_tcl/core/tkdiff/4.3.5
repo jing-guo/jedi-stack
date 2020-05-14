@@ -9,7 +9,7 @@ proc ModulesHelp { } {
 
 set name tkdiff
 set ver 4.3.5
-set base /g/data/dp9/jtl548/opt/modules/core/$name/$ver
+set base $env(OPT)/core/$name/$ver
 
 prepend-path "PATH" $base/bin
 

@@ -4,8 +4,6 @@
 export LMOD=N
 
 # Compiler/MPI combination
-# manaul change - /g/data/dp9/jtl548/opt/modules/modulefiles/core/jedi-gnu changed manually so
-# the following is changed to keep the name
 export COMPILER="gcc/system"
 #export COMPILER="gnu/8.2.1"
 export MPI="openmpi/4.0.2"
@@ -21,7 +19,7 @@ export COMPILER_BUILD="native-module"
 export MPI_BUILD="native-module"
 
 # Build options
-export PREFIX=/g/data/dp9/jtl548/opt/modules
+export PREFIX=$OPT
 export USE_SUDO=N
 export PKGDIR=pkg
 export LOGDIR=buildscripts/log

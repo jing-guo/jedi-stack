@@ -10,7 +10,7 @@ set comp gcc-system
 set mpi openmpi-3.1.4
 set name odb-api
 set ver 0.18.1.r2
-set base /g/data/dp9/jtl548/opt/modules/$comp/$mpi/$name/$ver
+set base $env(OPT)/$comp/$mpi/$name/$ver
 
 prereq ecbuild
 prereq netcdf

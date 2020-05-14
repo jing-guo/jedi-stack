@@ -9,7 +9,7 @@ proc ModulesHelp { } {
 set comp gcc-system
 set name nceplibs
 set ver fv3
-set base /g/data/dp9/jtl548/opt/modules/$comp/$name/$ver
+set base $env(OPT)/$comp/$name/$ver
 
 prepend-path LD_LIBRARY_PATH $base/lib
 prepend-path CPATH $base/include

@@ -9,7 +9,7 @@ proc ModulesHelp { } {
 
 set name ecbuild
 set ver jcsda-3.1.0.jcsda2
-set base /g/data/dp9/jtl548/opt/modules/core/$name/$ver
+set base $env(OPT)/core/$name/$ver
 
 #prereq cmake
 

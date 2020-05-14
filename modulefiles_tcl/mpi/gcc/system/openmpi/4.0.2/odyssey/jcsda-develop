@@ -10,7 +10,7 @@ set comp gcc-system
 set mpi openmpi-4.0.2
 set name odyssey
 set ver jcsda-develop
-set base /g/data/dp9/jtl548/opt/modules/$comp/$mpi/$name/$ver
+set base $env(OPT)/$comp/$mpi/$name/$ver
 
 prereq odc
 

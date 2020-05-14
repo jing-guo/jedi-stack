@@ -9,7 +9,7 @@ proc ModulesHelp { } {
 set comp gcc-system
 set name pdtoolkit
 set ver 3.25.1
-set base /g/data/dp9/jtl548/opt/modules/$comp/$name/$ver
+set base $env(OPT)/$comp/$name/$ver
 
 prepend-path LD_LIBRARY_PATH $base/lib
 prepend-path LIBRARY_PATH $base/lib
