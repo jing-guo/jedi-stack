@@ -200,7 +200,6 @@ To set up jedi-stack environment,
 ```
 unset PYTHONPATH                                            # when a Python interpreter starts PYTHONPATH is added to sys.path - allow clean module search path
 module purge
-module use /g/data/dp9/jtl548/opt/modules/modulefiles/core  # prepend this location to MODULEPATH - most jedi-stack modulefiles are
 module use /g/data/dp9/jtl548/opt/modules/modulefiles/apps  # prepend this location to MODULEPATH - where top-level modulefile for setting jedi-stack is
 module load jedi/gcc-system_openmpi-3.1.4                   # top-level modulefile
 ```
