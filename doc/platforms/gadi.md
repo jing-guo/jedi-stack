@@ -198,10 +198,10 @@ Source used for test is https://github.com/JCSDA/ufo-bundle develop branch at 55
 To set up jedi-stack environment,
 
 ```
-unset PYTHONPATH                                            # when a Python interpreter starts PYTHONPATH is added to sys.path - allow clean module search path
+unset PYTHONPATH                           # when a Python interpreter starts PYTHONPATH is added to sys.path - allow clean module search path
 module purge
-module use /g/data/dp9/jtl548/opt/modules/modulefiles/apps  # prepend this location to MODULEPATH - where top-level modulefile for setting jedi-stack is
-module load jedi/gcc-system_openmpi-3.1.4                   # top-level modulefile
+module use ${OPT}/modulefiles/apps         # prepend this location to MODULEPATH - this is where top-level modulefile for setting jedi-stack is
+module load jedi/gcc-system_openmpi-3.1.4  # top-level modulefile
 ```
 
 ecbuild and make succeed. CTest nearly succeeds with 2 failures,
