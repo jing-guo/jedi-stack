@@ -9,7 +9,7 @@
 #export MPI="impi/17.0.1"
 
 export MODULES=false
-export COMPILER="clang/9.1.0"
+export COMPILER="clang/11.0.0"
 export MPI="mpich/3.3.1"
 
 # This tells jedi-stack how you want to build the compiler and mpi modules
