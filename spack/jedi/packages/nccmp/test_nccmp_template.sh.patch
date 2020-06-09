@@ -1,0 +1,17 @@
+--- a/test/test_nccmp_template.sh       2020-06-09 18:08:55.253361192 -0400
++++ b/test/test_nccmp_template.sh 2020-06-09 18:09:07.141182632 -0400
+@@ -6,13 +6,6 @@
+ TRUTH=$srcdir/stderr$I.txt
+ NCGEN_VER=$(ncgen -v 2>&1 | grep -e version | cut -d' ' -f4)
+
+-if [ ${NCGEN_VER:0:5} < "4.3.3" ]; then
+-    LEGACY_TRUTH=$srcdir/stderr$I.pre433.txt
+-    if [ -e $LEGACY_TRUTH ]; then
+-        TRUTH=$LEGACY_TRUTH
+-    fi
+-fi
+-
+ LOG=stderr$I.tmp
+ DIFF="diff $TRUTH $LOG"
+ RUN="$($srcdir/nccmp.sh) $ARGS > $LOG 2>&1"
+

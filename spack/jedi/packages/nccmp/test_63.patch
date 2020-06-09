@@ -1,0 +1,10 @@
+--- a/test/test_nccmp_63.sh    2020-06-09 17:25:16.000000000 -0400
++++ b/test/test_nccmp_63.sh.2  2020-06-09 18:37:35.950872591 -0400
+@@ -7,4 +7,4 @@
+ export EXPECT=1
+ export HELP="Netcdf4 user-type vlens"
+ export SORT="-d"
+-$srcdir/test_nccmp_template.sh
+\ No newline at end of file
++#$srcdir/test_nccmp_template.sh
+
