@@ -30,6 +30,9 @@ class Ecbuild(CMakePackage):
 
     depends_on('cmake @3.10:', type=('build', 'run', 'link'))
 
+    def setup_dependent_build_environment(self, env, dependent_spec):
+        env.set('CMAKE_MODULE_PATH', self.prefix + '/share/ecbuild/cmake')
+
     def cmake_args(self):
         return []
 
