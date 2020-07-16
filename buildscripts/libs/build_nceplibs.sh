@@ -35,10 +35,10 @@ export FC=$MPI_FC
 export CC=$MPI_CC
 export CXX=$MPI_CXX
 
-export FFLAGS="-fPIC"
-export CFLAGS="-fPIC"
-export CXXFLAGS="-fPIC"
-export FCFLAGS="$FFLAGS"
+export FFLAGS+=" -fPIC"
+export CFLAGS+=" -fPIC"
+export CXXFLAGS+=" -fPIC"
+export FCFLAGS+="$FFLAGS"
 
 gitURLroot="https://github.com/noaa-emc/nceplibs"
 
@@ -55,5 +55,5 @@ cmake -DCMAKE_INSTALL_PREFIX=$prefix \
       -DDEPLOY=ON \
       -DBUILD_CRTM=OFF \
       -DBUILD_POST=OFF ..
-make -j${NTHREADS:-4}
-make deploy
+$SUDO VERBOSE=$MAKE_VERBOSE make -j${NTHREADS:-4}
+$SUDO VERBOSE=$MAKE_VERBOSE make deploy
