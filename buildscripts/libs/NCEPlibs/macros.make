@@ -1,1 +1,0 @@
-macros.make.linux.gnu
