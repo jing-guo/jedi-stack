@@ -103,7 +103,7 @@ build_lib ODC odc jcsda 1.0.3
 build_lib JASPER jasper 1.900.1
 build_lib ARMADILLO armadillo 1.900.1
 build_lib XERCES xerces 3.1.4
-build_lib NCEPLIBS nceplibs fv3
+build_lib NCEPLIBS nceplibs develop
 build_lib TKDIFF tkdirr 4.3.5
 build_lib PYJEDI pyjedi
 build_lib PYBIND11 pybind11 2.5.0
