@@ -35,10 +35,10 @@ export FC=$MPI_FC
 export CC=$MPI_CC
 export CXX=$MPI_CXX
 
-export FFLAGS+=" -fPIC"
-export CFLAGS+=" -fPIC"
-export CXXFLAGS+=" -fPIC"
-export FCFLAGS+="$FFLAGS"
+export FFLAGS="-fPIC"
+export CFLAGS="-fPIC"
+export CXXFLAGS="-fPIC"
+export FCFLAGS="$FFLAGS"
 
 gitURLroot="https://github.com/noaa-emc/nceplibs"
 
@@ -56,4 +56,16 @@ cmake -DCMAKE_INSTALL_PREFIX=$prefix \
       -DBUILD_CRTM=OFF \
       -DBUILD_POST=OFF ..
 $SUDO VERBOSE=$MAKE_VERBOSE make -j${NTHREADS:-4}
+
+# make deploy deploys the modulefiles, but it a way NCEPLIBS deploys them
 $SUDO VERBOSE=$MAKE_VERBOSE make deploy
+
+# remove ncep_post and crtm modulefile since we are not building with them
+$SUDO rm -rf $prefix/modules/ncep_post
+$SUDO rm -rf $prefix/modules/crtm
+
+# Copy the modules for the nceplibs to the JEDI_stack hierarchy
+$SUDO cp -R $prefix/modules/* ${JEDI_OPT:-$OPT}/modulefiles/mpi/$JEDI_COMPILER/$JEDI_MPI/
+
+# remove (empty directory of modules)
+$SUDO rm -rf $prefix/modules
