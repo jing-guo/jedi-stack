@@ -40,7 +40,7 @@ export CFLAGS="-fPIC"
 export CXXFLAGS="-fPIC"
 export FCFLAGS="$FFLAGS"
 
-gitURLroot="https://github.com/noaa-emc/nceplibs"
+gitURLroot="https://github.com/noaa-emc"
 
 cd ${JEDI_STACK_ROOT}/${PKGDIR:-"pkg"}
 
