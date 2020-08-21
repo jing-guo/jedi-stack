@@ -99,4 +99,14 @@ When building the intel stack on Discover, it is recommended that you use the `c
 module load comp/gcc/9.2.0 git python/GEOSpyD
 ```
 
-For most of the libraries, particularly hdf5, it is also advisable to use the `-m64` flag when compiling with intel, as specified in the [configuration file](../buildscripts/config/config_Discover.sh).  However, this flag should be omitted for bufrlib and for jedi itself.
+For most of the libraries, it is also advisable to use the `-m64` flag when compiling with intel, as specified in the [configuration file](../buildscripts/config/config_Discover.sh).  However, this flag should be omitted for bufrlib and for jedi itself.
+
+For hdf5 in particular, the following flags are recommended
+
+```bash
+export CFLAGS="-w -g -O -fPIC -m64"
+export CXXFLAGS="-w -g -O -fPIC -m64"
+export FFLAGS="-fPIC -g -O -m64"
+export F90FLAGS="-fPIC -g -O -m64"
+export FCFLAGS="$FFLAGS"
+```

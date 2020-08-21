@@ -21,8 +21,8 @@ if $MODULES; then
     module load jedi-$JEDI_MPI 
     module try-load cmake
     module try-load hdf5
-    module load netcdf
     module load pnetcdf
+    module load netcdf
     module list
     set -x
 
