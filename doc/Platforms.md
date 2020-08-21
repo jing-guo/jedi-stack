@@ -99,4 +99,4 @@ When building the intel stack on Discover, it is recommended that you use the `c
 module load comp/gcc/9.2.0 git python/GEOSpyD
 ```
 
-It is also advisable to use the `-m64` flag when compiling with intel, as specified in the [configuration file](../buildscripts/config/config_Discover.sh).
+For most of the libraries, particularly hdf5, it is also advisable to use the `-m64` flag when compiling with intel, as specified in the [configuration file](../buildscripts/config/config_Discover.sh).  However, this flag should be omitted for bufrlib and for jedi itself.
