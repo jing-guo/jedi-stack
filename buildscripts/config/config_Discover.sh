@@ -3,7 +3,6 @@
 # This software is licensed under the terms of the Apache Licence Version 2.0 which can be obtained at
 # http://www.apache.org/licenses/LICENSE-2.0.
 
-
 # Compiler/MPI combination
 export JEDI_COMPILER="intel/19.1.0.166"
 export JEDI_MPI="impi/19.1.0.166"
@@ -18,7 +17,7 @@ export JEDI_MPI="impi/19.1.0.166"
 export COMPILER_BUILD="native-pkg"
 export MPI_BUILD="from-source"
 # Build options
-export PREFIX=/data/users/mmiesch/modules-beta
+export PREFIX=/discover/swdev/jcsda/modules
 export USE_SUDO=N
 export PKGDIR=pkg
 export LOGDIR=buildscripts/log
