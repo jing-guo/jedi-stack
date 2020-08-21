@@ -120,7 +120,7 @@ build_lib PROJ proj 7.1.0
 # These must be rebuilt for each MPI implementation
 build_lib GPTL gptl 8.0.3
 build_lib NCO nco 4.7.9
-build_lib PIO pio 2.5.0
+build_lib PIO pio 2.5.1
 build_lib FFTW fftw 3.3.8
 build_lib BOOST_FULL boost 1.68.0
 build_lib ESMF esmf 8_0_1

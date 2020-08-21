@@ -3,10 +3,9 @@
 # This software is licensed under the terms of the Apache Licence Version 2.0 which can be obtained at
 # http://www.apache.org/licenses/LICENSE-2.0.
 
-
 # Compiler/MPI combination
-export JEDI_COMPILER="gnu/7.3.0"
-export JEDI_MPI="openmpi/3.1.3"
+export JEDI_COMPILER="gnu/9.1.0"
+export JEDI_MPI="openmpi/4.0.3"
 
 # This tells jedi-stack how you want to build the compiler and mpi modules
 # valid options include:
@@ -23,7 +22,7 @@ export PREFIX=/glade/work/miesch/modules
 export USE_SUDO=N
 export PKGDIR=pkg
 export LOGDIR=buildscripts/log
-export OVERWRITE=Y
+export OVERWRITE=N
 export NTHREADS=4
 export   MAKE_CHECK=N
 export MAKE_VERBOSE=Y
