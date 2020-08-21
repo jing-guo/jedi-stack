@@ -5,8 +5,8 @@
 
 
 # Compiler/MPI combination
-export JEDI_COMPILER="intel/19.0.5"
-export JEDI_MPI="impi/19.0.5"
+export JEDI_COMPILER="intel/19.1.0.166"
+export JEDI_MPI="impi/19.1.0.166"
 
 # This tells jedi-stack how you want to build the compiler and mpi modules
 # valid options include:
@@ -31,10 +31,10 @@ export DOWNLOAD_ONLY=N
 export STACK_EXIT_ON_FAIL=Y
 export WGET="wget -nv"
 #Global compiler flags
-export FFLAGS=""
-export CFLAGS=""
-export CXXFLAGS="-gxx-name=/opt/gcc/8.3/bin/g++ -std=c++14 -Wl,-rpath,/opt/gcc/8.3/lib64"
-export LDFLAGS="-gxx-name=/opt/gcc/8.3/bin/g++ -std=c++14 -Wl,-rpath,/opt/gcc/8.3/lib64"
+export FFLAGS="-m64"
+export CFLAGS="-m64"
+export CXXFLAGS="-m64"
+export LDFLAGS=""
 
 # Minimal JEDI Stack
 export      STACK_BUILD_CMAKE=N
