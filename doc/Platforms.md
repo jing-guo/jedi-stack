@@ -112,3 +112,7 @@ export FFLAGS="-fPIC -g -O -m64"
 export F90FLAGS="-fPIC -g -O -m64"
 export FCFLAGS="$FFLAGS"
 ```
+
+## Cheyenne (NCAR)
+
+One thing to watch out for with Cheyenne is that native modules often have the same names as the modules in the jedi-stack(e.g. `pnetcdf`, `hdf5`...) and they are set up to be the defaults.  So make sure you're using the modules you want in the build.
