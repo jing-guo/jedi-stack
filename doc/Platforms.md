@@ -93,10 +93,22 @@ This will add the flags necessary for C++-14 support and it will also identify `
 
 ## Discover (NCCS)
 
-When building the intel stack on Discover, it is recommended that you use the `comp/intel/19.1.0.166` together with the `comp/gcc/9.2.0` module.  Intel uses gcc headers and libraries to provide support for `c++-14` and later and the default `gcc` is not sufficient to provide this.  It also helps to load up-to-date versions of git and python before you run `build_stack.sh`.
+When building the intel stack on Discover, it is recommended that you use the `comp/intel/19.1.0.166` together with the `comp/gcc/9.2.0` module.  Intel uses gcc headers and libraries to provide support for `c++-14` and later and the default `gcc` is not sufficient to provide this.  It also helps to load up-to-date versions of cmake, git and python before you run `build_stack.sh`.   Furthermore, since the top-level metamodules are located is a slightly different place than on other systems (`$JEDI_OPT/modulefiles/apps`) it is useful to append your modulepath as shown here.  So, in short, we recommend you execute the following commands before running `build_stack.sh`:
 
 ```
-module load comp/gcc/9.2.0 git python/GEOSpyD
+module use $JEDI_OPT/modulefiles
+module use $JEDI_OPT/modulefiles/core
+module load comp/gcc/9.2.0 git python/GEOSpyD cmake
 ```
 
-For most of the libraries, particularly hdf5, it is also advisable to use the `-m64` flag when compiling with intel, as specified in the [configuration file](../buildscripts/config/config_Discover.sh).  However, this flag should be omitted for bufrlib and for jedi itself.
+For most of the libraries, it is also advisable to use the `-m64` flag when compiling with intel, as specified in the [configuration file](../buildscripts/config/config_Discover.sh).  However, this flag should be omitted for bufrlib and for jedi itself.
+
+For hdf5 in particular, the following flags are recommended
+
+```bash
+export CFLAGS="-w -g -O -fPIC -m64"
+export CXXFLAGS="-w -g -O -fPIC -m64"
+export FFLAGS="-fPIC -g -O -m64"
+export F90FLAGS="-fPIC -g -O -m64"
+export FCFLAGS="$FFLAGS"
+```
