@@ -4,8 +4,10 @@
 # http://www.apache.org/licenses/LICENSE-2.0.
 
 # Compiler/MPI combination
-export JEDI_COMPILER="gnu/9.1.0"
-export JEDI_MPI="openmpi/4.0.3"
+#export JEDI_COMPILER="gnu/9.1.0"
+#export JEDI_MPI="openmpi/4.0.3"
+export JEDI_COMPILER="intel/19.0.5"
+export JEDI_MPI="impi/2019.6.154"
 
 # This tells jedi-stack how you want to build the compiler and mpi modules
 # valid options include:
@@ -39,27 +41,27 @@ export LDFLAGS="-gxx-name=/glade/u/apps/ch/opt/gnu/9.1.0/bin/g++ -Wl,-rpath,/gla
 # Minimal JEDI Stack
 export      STACK_BUILD_CMAKE=N
 export       STACK_BUILD_SZIP=Y
-export    STACK_BUILD_UDUNITS=Y
-export       STACK_BUILD_ZLIB=Y
+export    STACK_BUILD_UDUNITS=N
+export       STACK_BUILD_ZLIB=N
 export     STACK_BUILD_LAPACK=N
-export STACK_BUILD_BOOST_HDRS=Y
-export     STACK_BUILD_EIGEN3=Y
-export    STACK_BUILD_BUFRLIB=Y
-export       STACK_BUILD_HDF5=Y
-export    STACK_BUILD_PNETCDF=Y
-export     STACK_BUILD_NETCDF=Y
-export      STACK_BUILD_NCCMP=Y
-export        STACK_BUILD_NCO=Y
-export    STACK_BUILD_ECBUILD=Y
-export      STACK_BUILD_ECKIT=Y
+export STACK_BUILD_BOOST_HDRS=N
+export     STACK_BUILD_EIGEN3=N
+export    STACK_BUILD_BUFRLIB=N
+export       STACK_BUILD_HDF5=N
+export    STACK_BUILD_PNETCDF=N
+export     STACK_BUILD_NETCDF=N
+export      STACK_BUILD_NCCMP=N
+export        STACK_BUILD_NCO=N
+export    STACK_BUILD_ECBUILD=N
+export      STACK_BUILD_ECKIT=N
 export      STACK_BUILD_FCKIT=N
 export      STACK_BUILD_ATLAS=N
-export        STACK_BUILD_ODC=Y
+export        STACK_BUILD_ODC=N
 
 # Optional Additions
-export           STACK_BUILD_PIO=Y
+export           STACK_BUILD_PIO=N
 export          STACK_BUILD_GPTL=N
-export        STACK_BUILD_PYJEDI=Y
+export        STACK_BUILD_PYJEDI=N
 export      STACK_BUILD_PYBIND11=N
 export      STACK_BUILD_NCEPLIBS=N
 export          STACK_BUILD_JPEG=N
