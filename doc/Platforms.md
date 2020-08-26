@@ -163,4 +163,4 @@ ecbuild -DCMAKE_CXX_FLAGS="-gxx-name=<gcc-path>/bin/g++ -Wl,-rpath,<gcc-path>/li
 
 Or you can specify them in a CMake toolchain.  See the `jcsda-Cheyenne-Intel.cmake` toolchain in the [jedi-cmake repository](https://github.com/jcsda/jedi-cmake) for an example.
 
-The third way to enable C++-14 is to define your own gcc module that does not conflict with your preferred intel module.  This can prepend the executable and linker paths to activate a particular gcc version.  For an example, see the [jedi-gcc modulefile for S4](../modulefiles/core/jedi-gcc/8.3.0.lua).
+The third way to enable C++-14 is to define your own gcc module that does not conflict with your preferred intel module.  This can prepend the executable and linker paths to activate a particular gcc version.  For an example, see the [jedi-gcc modulefile for S4](../modulefiles/core/jedi-gcc/8.3.lua).
