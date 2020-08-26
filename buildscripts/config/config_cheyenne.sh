@@ -33,15 +33,15 @@ export WGET="wget -nv"
 #Global compiler flags
 export FFLAGS=""
 export CFLAGS=""
-export CXXFLAGS=""
-export LDFLAGS=""
+export CXXFLAGS="-gxx-name=/glade/u/apps/ch/opt/gnu/9.1.0/bin/g++ -Wl,-rpath,/glade/u/apps/ch/opt/gnu/9.1.0/lib64"
+export LDFLAGS="-gxx-name=/glade/u/apps/ch/opt/gnu/9.1.0/bin/g++ -Wl,-rpath,/glade/u/apps/ch/opt/gnu/9.1.0/lib64"
 
 # Minimal JEDI Stack
 export      STACK_BUILD_CMAKE=N
 export       STACK_BUILD_SZIP=Y
 export    STACK_BUILD_UDUNITS=Y
 export       STACK_BUILD_ZLIB=Y
-export     STACK_BUILD_LAPACK=Y
+export     STACK_BUILD_LAPACK=N
 export STACK_BUILD_BOOST_HDRS=Y
 export     STACK_BUILD_EIGEN3=Y
 export    STACK_BUILD_BUFRLIB=Y
