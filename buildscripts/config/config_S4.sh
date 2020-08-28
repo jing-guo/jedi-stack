@@ -33,6 +33,6 @@ export WGET="wget -nv"
 #Global compiler flags
 export FFLAGS=""
 export CFLAGS=""
-export CXXFLAGS="-gxx-name=/opt/gcc/8.3/bin/g++ -std=c++14 -Wl,-rpath,/opt/gcc/8.3/lib64"
-export LDFLAGS="-gxx-name=/opt/gcc/8.3/bin/g++ -std=c++14 -Wl,-rpath,/opt/gcc/8.3/lib64"
+export CXXFLAGS="-std=c++14"
+export LDFLAGS="-std=c++14"
 
