@@ -5,8 +5,8 @@
 
 
 # Compiler/MPI combination
-export JEDI_COMPILER="intel/2019.5"
-export JEDI_MPI="openmpi/4.0.2"
+export JEDI_COMPILER="intel/2020"
+export JEDI_MPI="impi/2020"
 
 # This tells jedi-stack how you want to build the compiler and mpi modules
 # valid options include:
@@ -19,7 +19,7 @@ export JEDI_COMPILER_BUILD="native-module"
 export MPI_BUILD="native-module"
 
 # Build options
-export PREFIX=${HOME}/opt
+export PREFIX=/work/noaa/da/mmiesch/modules
 export USE_SUDO=N
 export PKGDIR=pkg
 export LOGDIR=buildscripts/log
@@ -34,46 +34,5 @@ export WGET="wget -nv"
 #Global compiler flags
 export FFLAGS=""
 export CFLAGS=""
-export CXXFLAGS=""
-export LDFLAGS=""
-
-# Minimal JEDI Stack
-export      STACK_BUILD_CMAKE=Y
-export       STACK_BUILD_SZIP=Y
-export    STACK_BUILD_UDUNITS=Y
-export       STACK_BUILD_ZLIB=Y
-export     STACK_BUILD_LAPACK=Y
-export STACK_BUILD_BOOST_HDRS=Y
-export     STACK_BUILD_EIGEN3=Y
-export    STACK_BUILD_BUFRLIB=N
-export       STACK_BUILD_HDF5=Y
-export    STACK_BUILD_PNETCDF=Y
-export     STACK_BUILD_NETCDF=Y
-export      STACK_BUILD_NCCMP=Y
-export        STACK_BUILD_NCO=Y
-export    STACK_BUILD_ECBUILD=N
-export      STACK_BUILD_ECKIT=N
-export      STACK_BUILD_FCKIT=N
-export        STACK_BUILD_ODC=N
-
-# Optional Additions
-export           STACK_BUILD_PIO=N
-export          STACK_BUILD_GPTL=N
-export        STACK_BUILD_PYJEDI=N
-export      STACK_BUILD_PYBIND11=N
-export      STACK_BUILD_NCEPLIBS=N
-export          STACK_BUILD_JPEG=N
-export           STACK_BUILD_PNG=N
-export        STACK_BUILD_JASPER=N
-export     STACK_BUILD_ARMADILLO=N
-export        STACK_BUILD_XERCES=N
-export        STACK_BUILD_TKDIFF=N
-export    STACK_BUILD_BOOST_FULL=N
-export          STACK_BUILD_ESMF=N
-export      STACK_BUILD_BASELIBS=N
-export     STACK_BUILD_PDTOOLKIT=N
-export          STACK_BUILD_TAU2=N
-export          STACK_BUILD_CGAL=N
-export          STACK_BUILD_GEOS=Y  #Note this Geometry-engine open-source not GEOS Model
-export        STACK_BUILD_SQLITE=Y  #Required for PROJ
-export          STACK_BUILD_PROJ=Y
+export CXXFLAGS="-std=c++14"
+export LDFLAGS="-std=c++14"

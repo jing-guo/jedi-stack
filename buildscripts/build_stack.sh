@@ -53,6 +53,9 @@ else
 
 fi
 
+# Choose which modules you wish to install
+$MODULES && source ${JEDI_BUILDSCRIPTS_DIR}/config/choose_modules.sh
+
 # this is needed to set environment variables if modules are not used
 $MODULES || no_modules $1
 
@@ -86,6 +89,7 @@ build_lib EIGEN3 eigen 3.3.7
 build_lib BUFRLIB bufrlib master
 build_lib ECBUILD ecbuild jcsda 3.3.2.jcsda2
 build_lib CGAL cgal 5.0.2
+build_lib GITLFS git-lfs 2.11.0
 
 #----------------------
 # These must be rebuilt for each MPI implementation
