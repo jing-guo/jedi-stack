@@ -47,7 +47,7 @@ fi
 export CFLAGS+=" -fPIC"
 export LDFLAGS+=" -L$NETCDF_ROOT/lib -L$HDF5_ROOT/lib -L$SZIP_ROOT/lib"
 
-url="https://gitlab.com/remikz/nccmp/-/tree/$version/${software}.tar.gz"
+url="https://gitlab.com/remikz/nccmp/-/archive/$version/${software}.tar.gz"
 
 cd ${JEDI_STACK_ROOT}/${PKGDIR:-"pkg"}
 

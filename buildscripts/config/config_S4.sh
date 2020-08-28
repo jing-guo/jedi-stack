@@ -16,13 +16,13 @@ export JEDI_MPI="impi/19.0.5"
 #             This is a common option for, e.g., gcc/g++/gfortrant
 # from-source: This is to build from source
 export COMPILER_BUILD="native-pkg"
-export MPI_BUILD="from-source"
+export MPI_BUILD="native-pkg"
 # Build options
-export PREFIX=/data/users/mmiesch/modules-beta
+export PREFIX=${JEDI_STACK_PREFIX:-/data/users/$USER/modules}
 export USE_SUDO=N
 export PKGDIR=pkg
 export LOGDIR=buildscripts/log
-export OVERWRITE=N
+export OVERWRITE=Y
 export NTHREADS=4
 export   MAKE_CHECK=N
 export MAKE_VERBOSE=Y
