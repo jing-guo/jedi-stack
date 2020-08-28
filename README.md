@@ -92,19 +92,21 @@ and make sure these settings are in place before proceeding to Steps 2-4.
 
 ## Step 2: Configure Build
 
-The next step is to choose what components of the stack you wish to build and to specify any other aspects of the build that you would like.  This is normally done by editing the file `buildscripts/config/config_custom.sh`.  Here we describe some of the parameter settings available.
+The next step is to choose what components of the stack you wish to build and to specify any other aspects of the build that you would like.  This is normally done by editing one of the platform-specific `buildscripts/config/config_*.sh` files.  Or, if your platform is not among the options, you can edit the `config_custom.sh` file.  Then, edit the `buildscripts/config/choose_modules.sh` file to choose which modules you wish to build.  Note that some are prerequisites of others.  For example, you must build hdf5 before you build netcdf.
 
-For building on Mac OSX, a configuration file (`config_mac.sh`) is provided. This configuration is set up to build using Clang 10.0.0 with gfortran 7.4.0 and OpenMPI 3.1.2. You may wish to edit this file for building with a different compiler/mpi set.
+Here we describe some of the parameter settings available in these configuration files.
 
-For building on an EMC RHEL7 workstation, a configuration file (`config_rhel7emc.sh`) is provided.  This configuration is set up to build using GCC 9.2.0 and OpenMPI 3.1.5.
+For building on Mac OSX, a configuration file (`config_mac.sh`) is provided. This configuration is set up to build using Clang 10.0.0 with gfortran and OpenMPI. You may wish to edit this file for building with a different compiler/mpi set.
 
-**COMPILER** This defines the vendor and version of the compiler you wish to use for this build.  The format is the same as what you would typically use in a module load command:
+For building on an EMC RHEL7 workstation, a configuration file (`config_rhel7emc.sh`) is provided.  This .
+
+**JEDI_COMPILER** This defines the vendor and version of the compiler you wish to use for this build.  The format is the same as what you would typically use in a module load command:
 ```
 export COMPILER=<name>/<version>
 ```
 For example, `COMPILER=gnu/7.3.0`.
 
-**MPI** is the MPI library you wish to use for this build.  The format is the same as for `COMPILER`, for example: `export MPI=openmpi/3.1.2`.
+**JEDI_MPI** is the MPI library you wish to use for this build.  The format is the same as for `COMPILER`, for example: `export MPI=openmpi/3.1.2`.
 
 **PREFIX** is the directory where the software packages will be installed.  Normally this is set to be the same as the `JEDI_OPT` environment variable (default value `/opt/modules`), though this is not required.  If `JEDI_OPT` and `PREFIX` are both the same, then the software installation trees (the top level of each being is the compiler, e.g. `gnu-7.3.0`) will branch directly off of `$JEDI_OPT` while the module files will be located in the `modulefiles subdirectory.
 
