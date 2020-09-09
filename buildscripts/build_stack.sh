@@ -114,6 +114,8 @@ build_lib PYBIND11 pybind11 2.5.0
 build_lib GEOS geos 3.8.1
 build_lib SQLITE sqlite 3.32.3
 build_lib PROJ proj 7.1.0
+build_lib JSON json 3.9.1
+build_lib JSON_SCHEMA_VALIDATOR json-schema-validator 2.1.0
 
 
 #----------------------

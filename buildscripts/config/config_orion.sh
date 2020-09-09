@@ -77,3 +77,5 @@ export          STACK_BUILD_CGAL=N
 export          STACK_BUILD_GEOS=Y  #Note this Geometry-engine open-source not GEOS Model
 export        STACK_BUILD_SQLITE=Y  #Required for PROJ
 export          STACK_BUILD_PROJ=Y
+export          STACK_BUILD_JSON=Y
+export STACK_BUILD_JSON_SCHEMA_VALIDATOR=Y
