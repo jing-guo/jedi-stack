@@ -5,8 +5,8 @@
 
 
 # Compiler/MPI combination
-export JEDI_COMPILER="gnu/9.2.0"
-export JEDI_MPI="openmpi/4.0.1"
+export JEDI_COMPILER="gnu/9.3.0"
+export JEDI_MPI="openmpi/4.0.3"
 #export MPI="mpich/3.2.1"
 
 #export JEDI_COMPILER="intel/19.0.5"
@@ -85,5 +85,5 @@ export          STACK_BUILD_CGAL=N
 export          STACK_BUILD_GEOS=N
 export        STACK_BUILD_SQLITE=N
 export          STACK_BUILD_PROJ=N
-export          STACK_BUILD_JSON=Y
-export STACK_BUILD_JSON_SCHEMA_VALIDATOR=Y
+export          STACK_BUILD_JSON=N
+export STACK_BUILD_JSON_SCHEMA_VALIDATOR=N
