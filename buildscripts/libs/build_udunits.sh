@@ -52,5 +52,13 @@ make V=$MAKE_VERBOSE -j${NTHREADS:-4}
 $SUDO make install
 
 # generate modulefile from template
-$MODULES && update_modules compiler $name $version \
-         || echo $name $version >> ${JEDI_STACK_ROOT}/jedi-stack-contents.log
+if $MODULES; then
+    update_modules compiler $name $version
+else
+    echo $name $version >> ${JEDI_STACK_ROOT}/jedi-stack-contents.log
+    echo "export UDUNITS2_ROOT=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export UDUNITS2_PATH=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export UDUNITS2_INCLUDE_DIRS=$prefix/include" >> /etc/profile.d/$name-env-vars.sh
+    echo "export UDUNITS2_LIBRARIES=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
+    echo "export UDUNITS2_VERSION=$version" >> /etc/profile.d/$name-env-vars.sh
+fi
