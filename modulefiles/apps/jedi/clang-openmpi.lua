@@ -25,7 +25,6 @@ load("json-schema-validator")
 
 load("ecbuild")
 
-load("odc")
 load("nccmp")
 
 setenv("CC","mpicc")
