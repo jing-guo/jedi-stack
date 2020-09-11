@@ -116,6 +116,9 @@ function build_lib() {
         fi
         echo "BUILD SUCCESS! Lib: $2-$3"
     fi
+
+    [ -f /etc/profile.d/$2-env-vars.sh ] && source /etc/profile.d/$2-env-vars.sh
+
     set -x
 }
 
