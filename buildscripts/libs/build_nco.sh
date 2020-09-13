@@ -32,6 +32,10 @@ if $MODULES; then
     fi
 else
     prefix=${NCO_ROOT:-"/usr/local"}
+    [ -f /etc/profile.d/szip-env-vars.sh ] && source /etc/profile.d/szip-env-vars.sh
+    [ -f /etc/profile.d/hdf5-env-vars.sh ] && source /etc/profile.d/hdf5-env-vars.sh
+    [ -f /etc/profile.d/udunits-env-vars.sh ] && source /etc/profile.d/udunits-env-vars.sh
+    [ -f /etc/profile.d/netcdf-env-vars.sh ] && source /etc/profile.d/netcdf-env-vars.sh
 fi
 
 if [[ ! -z $mpi ]]; then
@@ -73,3 +77,10 @@ $SUDO make install
 [[ -z $mpi ]] && modpath=compiler || modpath=mpi
 $MODULES && update_modules $modpath $name $version \
          || echo $name $version >> ${JEDI_STACK_ROOT}/jedi-stack-contents.log
+
+if [ "$MODULES" == false ]; then
+    echo "export NCO_ROOT=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export NCO_INCLUDES=$prefix/include" >> /etc/profile.d/$name-env-vars.sh
+    echo "export NCO_LIBRARIES=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
+    echo "export NCO_VERSION=$version" >> /etc/profile.d/$name-env-vars.sh
+fi

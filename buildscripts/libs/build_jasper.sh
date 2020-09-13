@@ -11,11 +11,13 @@ version=$1
 # Hyphenated version used for install prefix
 compiler=$(echo $JEDI_COMPILER | sed 's/\//-/g')
 
-set +x
-source $MODULESHOME/init/bash
-module load jedi-$JEDI_COMPILER
-module list
-set -x
+if [ "$MODULES" == true ]; then
+    set +x
+    source $MODULESHOME/init/bash
+    module load jedi-$JEDI_COMPILER
+    module list
+    set -x
+fi
 
 export FC=$SERIAL_FC
 export CC=$SERIAL_CC
@@ -69,3 +71,16 @@ $SUDO make install
 # generate modulefile from template
 $MODULES && update_modules compiler $name $version \
          || echo $name $version >> ${JEDI_STACK_ROOT}/jedi-stack-contents.log
+
+if [ "$MODULES" == false ]; then
+    echo "export Jasper_ROOT=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export JASPER_ROOT=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export JASPER_INCLUDES=$prefix/include/jasper" >> /etc/profile.d/$name-env-vars.sh
+    echo "export JASPER_INCLUDE_DIR=$prefix/include/jasper" >> /etc/profile.d/$name-env-vars.sh
+    echo "export JASPER_INC=$prefix/include/jasper" >> /etc/profile.d/$name-env-vars.sh
+    echo "export JASPER_LIBRARIES=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
+    echo "export JASPER_LIBDIR=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
+    echo "export JASPER_LIB=$prefix/lib/libjasper.a" >> /etc/profile.d/$name-env-vars.sh
+    echo "export JASPER_VERSION=$version" >> /etc/profile.d/$name-env-vars.sh
+    echo "export JASPER_VER=$version" >> /etc/profile.d/$name-env-vars.sh
+fi

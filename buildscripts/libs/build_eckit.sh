@@ -34,6 +34,10 @@ if $MODULES; then
     fi
 else
     prefix=${ECKIT_ROOT:-"/usr/local"}
+    [ -f /etc/profile.d/ecbuild-env-vars.sh ] && source /etc/profile.d/ecbuild-env-vars.sh
+    [ -f /etc/profile.d/zlib-env-vars.sh ] && source /etc/profile.d/zlib-env-vars.sh
+    [ -f /etc/profile.d/boost-headers-env-vars.sh ] && source /etc/profile.d/boost-headers-env-vars.sh
+    [ -f /etc/profile.d/eigen-env-vars.sh ] && source /etc/profile.d/eigen-env-vars.sh
 fi
 
 export FC=$MPI_FC
@@ -60,3 +64,10 @@ VERBOSE=$MAKE_VERBOSE $SUDO make install
 # generate modulefile from template
 $MODULES && update_modules mpi $name $source-$version \
          || echo $name $source-$version >> ${JEDI_STACK_ROOT}/jedi-stack-contents.log
+
+if [ "$MODULES" == false ]; then
+    echo "export eckit_ROOT=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export eckit_DIR=$prefix/lib/cmake/eckit" >> /etc/profile.d/$name-env-vars.sh
+    echo "export ECKIT_PATH=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export ECKIT_VERSION=$version" >> /etc/profile.d/$name-env-vars.sh
+fi
