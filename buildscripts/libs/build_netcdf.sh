@@ -32,6 +32,9 @@ if $MODULES; then
     fi
 else
     prefix=${NETCDF_ROOT:-"/usr/local"}
+    [ -f /etc/profile.d/szip-env-vars.sh ] && source /etc/profile.d/szip-env-vars.sh
+    [ -f /etc/profile.d/hdf5-env-vars.sh ] && source /etc/profile.d/hdf5-env-vars.sh
+    [ -f /etc/profile.d/pnetcdf-env-vars.sh ] && source /etc/profile.d/pnetcdf-env-vars.sh
 fi
 
 if [[ ! -z $mpi ]]; then
@@ -118,9 +121,17 @@ echo "BUILDING NETCDF-Fortran"
 echo "################################################################################"
 
 # Load netcdf-c before building netcdf-fortran
-$MODULES && module load netcdf
-
-module list
+if [ "$MODULES" == true ]; then
+    module load netcdf
+    module list
+else
+    export NETCDF=$prefix
+    export NETCDF_INCLUDES=$prefix/include
+    export NETCDF_INCLUDE=$prefix/include
+    export NETCDF_LIBRARIES=$prefix/lib
+    export NETCDF_CFLAGS="-I$prefix/include"
+    export NETCDF_LDFLAGS_C="-L$prefix/lib -lnetcdf"
+fi
 
 set -x
 
@@ -164,3 +175,21 @@ make V=$MAKE_VERBOSE -j${NTHREADS:-4}
 $SUDO make install
 
 $MODULES || echo $software >> ${JEDI_STACK_ROOT}/jedi-stack-contents.log
+
+if [ "$MODULES" == false ]; then
+    echo "export NETCDF=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export NETCDF_ROOT=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export NETCDF_INCLUDES=$prefix/include" >> /etc/profile.d/$name-env-vars.sh
+    echo "export NETCDF_INCLUDE=$prefix/include" >> /etc/profile.d/$name-env-vars.sh
+    echo "export NETCDF_LIBRARIES=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
+    echo "export NETCDF_VERSION=$version" >> /etc/profile.d/$name-env-vars.sh
+    echo "export NETCDF_FFLAGS=\"-I$prefix/include\"" >> /etc/profile.d/$name-env-vars.sh
+    echo "export NETCDF_CFLAGS=\"-I$prefix/include\"" >> /etc/profile.d/$name-env-vars.sh
+    echo "export NETCDF_CXXFLAGS=\"-I$prefix/include\"" >> /etc/profile.d/$name-env-vars.sh
+    echo "export NETCDF_CXX4FLAGS=\"-I$prefix/include\"" >> /etc/profile.d/$name-env-vars.sh
+    echo "export NETCDF_LDFLAGS_F=\"-L$prefix/lib -lnetcdff\"" >> /etc/profile.d/$name-env-vars.sh
+    echo "export NETCDF_LDFLAGS_C=\"-L$prefix/lib -lnetcdf\"" >> /etc/profile.d/$name-env-vars.sh
+    echo "export NETCDF_LDFLAGS_CXX=\"-L$prefix/lib -lnetcdf -lnetcdf_c++\"" >> /etc/profile.d/$name-env-vars.sh
+    echo "export NETCDF_LDFLAGS_CXX4=\"-L$prefix/lib -lnetcdf -lnetcdf_c++4\"" >> /etc/profile.d/$name-env-vars.sh
+    echo "export NETCDF_LDFLAGS=\"-L$prefix/lib -lnetcdff\"" >> /etc/profile.d/$name-env-vars.sh
+fi

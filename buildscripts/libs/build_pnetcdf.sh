@@ -27,6 +27,8 @@ if $MODULES; then
     fi
 else
     prefix=${PNETCDF_ROOT:-"/usr/local"}
+    [ -f /etc/profile.d/szip-env-vars.sh ] && source /etc/profile.d/szip-env-vars.sh
+    [ -f /etc/profile.d/hdf5-env-vars.sh ] && source /etc/profile.d/hdf5-env-vars.sh
 fi
     
 
@@ -65,3 +67,11 @@ $SUDO make install
 # generate modulefile from template
 $MODULES && update_modules mpi $name $version \
          || echo $name $version >> ${JEDI_STACK_ROOT}/jedi-stack-contents.log
+
+if [ "$MODULES" == false ]; then
+    echo "export PNETCDF=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export PNETCDF_ROOT=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export PNETCDF_INCLUDES=$prefix/include" >> /etc/profile.d/$name-env-vars.sh
+    echo "export PNETCDF_LIBRARIES=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
+    echo "export PNETCDF_VERSION=$version" >> /etc/profile.d/$name-env-vars.sh
+fi

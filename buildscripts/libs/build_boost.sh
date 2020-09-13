@@ -102,3 +102,9 @@ rm -f $HOME/user-config.jam
 [[ -z $mpi ]] && modpath=compiler || modpath=mpi
 $MODULES && update_modules $modpath $name $version \
          || echo $name $version >> ${JEDI_STACK_ROOT}/jedi-stack-contents.log
+
+if [ "$MODULES" == false ]; then
+    echo "export BOOST_ROOT=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export BOOST_VERSION=$version" >> /etc/profile.d/$name-env-vars.sh
+    echo "export Boost_INCLUDE_DIR=$prefix/include" >> /etc/profile.d/$name-env-vars.sh
+fi

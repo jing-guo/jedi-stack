@@ -54,3 +54,14 @@ $SUDO make install
 # generate modulefile from template
 $MODULES && update_modules compiler $name $version \
          || echo $name $version >> ${JEDI_STACK_ROOT}/jedi-stack-contents.log
+
+if [ "$MODULES" == false ]; then
+    echo "export ZLIB_ROOT=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export ZLIB_INCLUDES==$prefix/include" >> /etc/profile.d/$name-env-vars.sh
+    echo "export ZLIB_LIBRARIES=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
+    echo "export ZLIB_VERSION=$version" >> /etc/profile.d/$name-env-vars.sh
+    echo "export Z_INC==$prefix/include" >> /etc/profile.d/$name-env-vars.sh
+    echo "export Z_LIB=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
+    echo "export Z_VER=$version" >> /etc/profile.d/$name-env-vars.sh
+    echo "export Z_SRC=${JEDI_STACK_ROOT}/${PKGDIR:-"pkg"}/$software" >> /etc/profile.d/$name-env-vars.sh
+fi

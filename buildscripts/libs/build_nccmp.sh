@@ -33,6 +33,10 @@ if $MODULES; then
     fi
 else
     prefix=${NCCMP_ROOT:-"/usr/local"}
+    [ -f /etc/profile.d/szip-env-vars.sh ] && source /etc/profile.d/szip-env-vars.sh
+    [ -f /etc/profile.d/hdf5-env-vars.sh ] && source /etc/profile.d/hdf5-env-vars.sh
+    [ -f /etc/profile.d/pnetcdf-env-vars.sh ] && source /etc/profile.d/pnetcdf-env-vars.sh
+    [ -f /etc/profile.d/netcdf-env-vars.sh ] && source /etc/profile.d/netcdf-env-vars.sh
 fi
 
 if [[ ! -z $mpi ]]; then
@@ -71,3 +75,8 @@ $SUDO make V=$MAKE_VERBOSE -j${NTHREADS:-4} install
 [[ -z $mpi ]] && modpath=compiler || modpath=mpi
 $MODULES && update_modules $modpath $name $version \
          || echo $name $version >> ${JEDI_STACK_ROOT}/jedi-stack-contents.log
+
+if [ "$MODULES" == false ]; then
+    echo "export NCCMP_ROOT=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export NCCMP_VERSION=$version" >> /etc/profile.d/$name-env-vars.sh
+fi

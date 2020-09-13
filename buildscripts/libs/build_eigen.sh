@@ -46,4 +46,10 @@ $SUDO make install
 $MODULES && update_modules core $name $version \
          || echo $name $version >> ${JEDI_STACK_ROOT}/jedi-stack-contents.log
 
+if [ $MODULES = false ]; then
+    echo $name $version >> ${JEDI_STACK_ROOT}/jedi-stack-contents.log
+    echo "export EIGEN_ROOT=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export EIGEN_PATH=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export EIGEN_VERSION=$version" >> /etc/profile.d/$name-env-vars.sh
+fi
 exit 0

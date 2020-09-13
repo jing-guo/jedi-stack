@@ -29,6 +29,8 @@ if $MODULES; then
     fi
 else
     prefix=${HDF5_ROOT:-"/usr/local"}
+    [ -f /etc/profile.d/szip-env-vars.sh ] && source /etc/profile.d/szip-env-vars.sh
+    [ -f /etc/profile.d/zlib-env-vars.sh ] && source /etc/profile.d/zlib-env-vars.sh
 fi
 
 if [[ ! -z $mpi ]]; then
@@ -74,3 +76,19 @@ make V=$MAKE_VERBOSE -j${NTHREADS:-4}
 [[ -z $mpi ]] && modpath=compiler || modpath=mpi
 $MODULES && update_modules $modpath $name $version \
          || echo $name $version >> ${JEDI_STACK_ROOT}/jedi-stack-contents.log
+
+if [ "$MODULES" == false ]; then
+    echo "export HDF5_ROOT=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export HDF5=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export HDF5_INCLUDES=$prefix/include" >> /etc/profile.d/$name-env-vars.sh
+    echo "export HDF5_INCLUDE=$prefix/include" >> /etc/profile.d/$name-env-vars.sh
+    echo "export HDF5_LIBRARIES=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
+    echo "export HDF5_VERSION=$version" >> /etc/profile.d/$name-env-vars.sh
+    echo "export HDF5_CXXFLAGS=\"-I$prefix/include\"" >> /etc/profile.d/$name-env-vars.sh
+    echo "export HDF5_LDFLAGS_CXX=\"-L$prefix/lib -lhdf5_hl -hdf5_hl_cpp -lhdf5 -lhdf5_cpp\"" >> /etc/profile.d/$name-env-vars.sh
+    echo "export HDF5_CFLAGS=\"-I$prefix/include\"" >> /etc/profile.d/$name-env-vars.sh
+    echo "export HDF5_FFLAGS=\"-I$prefix/include\"" >> /etc/profile.d/$name-env-vars.sh
+    echo "export HDF5_LDFLAGS=\"-L$prefix/lib -lhdf5_hl -lhdf5\"" >> /etc/profile.d/$name-env-vars.sh
+    echo "export HDF5_LDFLAGS_F=\"-L$prefix/lib -lhdf5_hl -lhdf5\"" >> /etc/profile.d/$name-env-vars.sh
+    echo "export HDF5_LDFLAGS_C=\"-L$prefix/lib -lhdf5_hl -lhdf5\"" >> /etc/profile.d/$name-env-vars.sh
+fi

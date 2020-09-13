@@ -56,3 +56,12 @@ $SUDO make install
 # generate modulefile from template
 $MODULES && update_modules compiler $name $version \
          || echo $name $version >> ${JEDI_STACK_ROOT}/jedi-stack-contents.log
+
+if [ "$MODULES" == false ]; then
+    echo "export PNG_ROOT=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export PNG_INCLUDES=$prefix/include" >> /etc/profile.d/$name-env-vars.sh
+    echo "export PNG_INC=$prefix/include" >> /etc/profile.d/$name-env-vars.sh
+    echo "export PNG_LIBRARIES=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
+    echo "export PNG_LIBDIR=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
+    echo "export PNG_VERSION=$version" >> /etc/profile.d/$name-env-vars.sh
+fi

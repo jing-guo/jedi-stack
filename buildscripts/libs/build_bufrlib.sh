@@ -55,3 +55,9 @@ VERBOSE=$MAKE_VERBOSE $SUDO make install
 # generate modulefile from template
 $MODULES && update_modules compiler $name $version \
          || echo $name $version >> ${JEDI_STACK_ROOT}/jedi-stack-contents.log
+
+if [ "$MODULES" == false ]; then
+    echo "export bufr_ROOT=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export bufrlib_ROOT=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export bufr_VERSION=$version" >> /etc/profile.d/$name-env-vars.sh
+fi

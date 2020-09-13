@@ -56,3 +56,12 @@ VERBOSE=$MAKE_VERBOSE $SUDO make install
 # generate modulefile from template
 $MODULES && update_modules compiler $name $version \
          || echo $name $version >> ${JEDI_STACK_ROOT}/jedi-stack-contents.log
+
+if [ "$MODULES" == false ]; then
+    echo "export LAPACK_ROOT=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export LAPACK_DIR=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export LAPACK_PATH=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export LAPACK_INCLUDES=$prefix/include" >> /etc/profile.d/$name-env-vars.sh
+    echo "export LAPACK_LIBRARIES=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
+    echo "export LAPACK_VERSION=$version" >> /etc/profile.d/$name-env-vars.sh
+fi
