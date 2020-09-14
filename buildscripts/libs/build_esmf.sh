@@ -35,6 +35,15 @@ if $MODULES; then
 
 else
   prefix=${ESMF_ROOT:-"/usr/local"}
+  [ -f /etc/profile.d/szip-env-vars.sh ] && source /etc/profile.d/szip-env-vars.sh
+  [ -f /etc/profile.d/zlib-env-vars.sh ] && source /etc/profile.d/zlib-env-vars.sh                                   
+  [ -f /etc/profile.d/hdf5-env-vars.sh ] && source /etc/profile.d/hdf5-env-vars.sh
+  [ -f /etc/profile.d/pnetcdf-env-vars.sh ] && source /etc/profile.d/pnetcdf-env-vars.sh
+  [ -f /etc/profile.d/netcdf-env-vars.sh ] && source /etc/profile.d/netcdf-env-vars.sh
+  [ -f /etc/profile.d/udunits-env-vars.sh ] && source /etc/profile.d/udunits-env-vars.sh
+  [ -f /etc/profile.d/xerces-env-vars.sh ] && source /etc/profile.d/xerces-env-vars.sh
+  [ -f /etc/profile.d/lapack-env-vars.sh ] && source /etc/profile.d/lapack-env-vars.sh
+  [ -f /etc/profile.d/pio-env-vars.sh ] && source /etc/profile.d/pio-env-vars.sh
 fi
 
 if [[ ! -z $mpi ]]; then
@@ -89,6 +98,28 @@ export ESMF_INSTALL_LIBDIR=lib
 export ESMF_INSTALL_MODDIR=mod
 export ESMF_ABI=64
 
+if [ "$MODULES" == false ]; then
+  export ESMF_LAPACK=mkl
+  export ESMF_LAPACK_LIBPATH=/usr/local/lib
+  export ESMF_NETCDF=standard
+  export ESMF_NETCDF_INCLUDE=/usr/local/include
+  export ESMF_NETCDF_LIBPATH=/usr/local/lib
+  export ESMF_NETCDF_LIBS="-lnetcdff -lnetcdf -lhdf5_hl -lhdf5"
+  export ESMF_PNETCDF=standard
+  export ESMF_PNETCDF_INCLUDE=/usr/local/include
+  export ESMF_PNETCDF_LIBPATH=/usr/local/lib
+  export ESMF_PIO=internal
+  export ESMF_XERCES=standard
+  export ESMF_XERCES_INCLUDE=/usr/local/include
+  export ESMF_XERCES_LIBPATH=/usr/local/lib
+  export ESMF_DIR=/usr/local/jedi-stack/pkg/esmf/8.0.1_parallel/src/8_0_1_parallel
+  export ESMF_PREFIX=/usr/local
+  export ESMF_COMM=intelmpi
+  export ESMF_COMPILER=intel
+  export ESMF_F90COMPILEOPTS="-g -traceback -fp-model precise"
+  export ESMF_CXXCOMPILEOPTS="-g -traceback -fp-model precise"
+fi
+
 gitURL="https://git.code.sf.net/p/esmf/esmf.git"
 gitURL="https://github.com/esmf-org/esmf"
 
@@ -109,3 +140,7 @@ $SUDO make install
 [[ -z $mpi ]] && modpath=compiler || modpath=mpi
 $MODULES && update_modules $modpath $name $version \
          || echo $name $version >> ${JEDI_STACK_ROOT}/jedi-stack-contents.log
+
+if [ "$MODULES" == false ]; then
+    echo "export ESMFMKFILE=$prefix/lib/esmf.mk" >> /etc/profile.d/$name-env-vars.sh
+fi

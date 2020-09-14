@@ -35,10 +35,15 @@ if $MODULES; then
     prefix="${PREFIX:-"/opt/modules"}/$compiler/$mpi/$name/$version"
     if [[ -d $prefix ]]; then
         [[ $OVERWRITE =~ [yYtT] ]] && ( echo "WARNING: $prefix EXISTS: OVERWRITING!";$SUDO rm -rf $prefix; $SUDO mkdir $prefix ) \
-                                   || ( echo "WARNING: $prefix EXISTS, SKIPPING"; exit 1 )
+                                   || ( echo "WARNING: $prefix EXISTS, SKIPPING"; exit 1 )            
     fi
 else
     prefix=${PIO_ROOT:-"/usr/local"}
+    [ -f /etc/profile.d/szip-env-vars.sh ] && source /etc/profile.d/szip-env-vars.sh
+    [ -f /etc/profile.d/zlib-env-vars.sh ] && source /etc/profile.d/zlib-env-vars.sh                                   
+    [ -f /etc/profile.d/hdf5-env-vars.sh ] && source /etc/profile.d/hdf5-env-vars.sh
+    [ -f /etc/profile.d/pnetcdf-env-vars.sh ] && source /etc/profile.d/pnetcdf-env-vars.sh
+    [ -f /etc/profile.d/netcdf-env-vars.sh ] && source /etc/profile.d/netcdf-env-vars.sh
 fi
 
 export FC=$MPI_FC
@@ -70,3 +75,11 @@ VERBOSE=$MAKE_VERBOSE $SUDO make install
 # generate modulefile from template
 $MODULES && update_modules mpi $name $version \
          || echo $name $version >> ${JEDI_STACK_ROOT}/jedi-stack-contents.log
+
+if [ "$MODULES" == false ]; then
+    echo "export PIO=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export PIO_ROOT=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export PIO_INCLUDES=$prefix/include" >> /etc/profile.d/$name-env-vars.sh
+    echo "export PIO_LIBRARIES=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
+    echo "export PIO_VERSION=$version" >> /etc/profile.d/$name-env-vars.sh
+fi
