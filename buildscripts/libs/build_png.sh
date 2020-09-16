@@ -59,6 +59,7 @@ $MODULES && update_modules compiler $name $version \
 
 if [ "$MODULES" == false ]; then
     echo "export PNG_ROOT=$prefix" >> /etc/profile.d/$name-env-vars.sh
+    echo "export LIBPNG_ROOT=$prefix" >> /etc/profile.d/$name-env-vars.sh
     echo "export PNG_INCLUDES=$prefix/include" >> /etc/profile.d/$name-env-vars.sh
     echo "export PNG_INC=$prefix/include" >> /etc/profile.d/$name-env-vars.sh
     echo "export PNG_LIBRARIES=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
