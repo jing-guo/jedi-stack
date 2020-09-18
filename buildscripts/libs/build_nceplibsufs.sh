@@ -299,6 +299,18 @@ if [ "$MODULES" == false ]; then
         echo "export SIGIO_LIB4=$prefix/$libdir/lib/lib${libname}_4.a" >> /etc/profile.d/$libname-env-vars.sh
     fi
 
+    libname=sp
+    get_version $libname libdir version
+    echo for $libname, libdir=$libdir, version=$version
+    if [[ "$libdir" != "" && "$version" != "" ]]; then
+        [[ -f /etc/profile.d/$libname-env-vars.sh ]] && rm -rf /etc/profile.d/$libname-env-vars.sh
+        echo "export SP_VER=$version" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export SP_SRC=$pkgdir/$software" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export SP_LIB4=$prefix/$libdir/lib/lib${libname}_4.a" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export SP_LIB8=$prefix/$libdir/lib/lib${libname}_8.a" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export SP_LIBd=$prefix/$libdir/lib/lib${libname}_d.a" >> /etc/profile.d/$libname-env-vars.sh
+    fi
+
     libname=w3emc
     get_version $libname libdir version
     echo for $libname, libdir=$libdir, version=$version
@@ -312,6 +324,18 @@ if [ "$MODULES" == false ]; then
         echo "export W3EMC_LIB4=$prefix/$libdir/lib/lib${libname}_4.a" >> /etc/profile.d/$libname-env-vars.sh
         echo "export W3EMC_LIB8=$prefix/$libdir/lib/lib${libname}_8.a" >> /etc/profile.d/$libname-env-vars.sh
         echo "export W3EMC_LIBd=$prefix/$libdir/lib/lib${libname}_d.a" >> /etc/profile.d/$libname-env-vars.sh
+    fi
+
+    libname=w3nco
+    get_version $libname libdir version
+    echo for $libname, libdir=$libdir, version=$version
+    if [[ "$libdir" != "" && "$version" != "" ]]; then
+        [[ -f /etc/profile.d/$libname-env-vars.sh ]] && rm -rf /etc/profile.d/$libname-env-vars.sh
+        echo "export W3NCO_VER=$version" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export W3NCO_SRC=$pkgdir/$software" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export W3NCO_LIB4=$prefix/$libdir/lib/lib${libname}_4.a" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export W3NCO_LIB8=$prefix/$libdir/lib/lib${libname}_8.a" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export W3NCO_LIBd=$prefix/$libdir/lib/lib${libname}_d.a" >> /etc/profile.d/$libname-env-vars.sh
     fi
 
     libname=wgrib2
