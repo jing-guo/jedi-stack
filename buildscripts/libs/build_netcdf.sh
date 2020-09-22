@@ -181,7 +181,9 @@ if [ "$MODULES" == false ]; then
     echo "export NETCDF_ROOT=$prefix" >> /etc/profile.d/$name-env-vars.sh
     echo "export NETCDF_INCLUDES=$prefix/include" >> /etc/profile.d/$name-env-vars.sh
     echo "export NETCDF_INCLUDE=$prefix/include" >> /etc/profile.d/$name-env-vars.sh
+    echo "export NETCDF_INC=$prefix/include" >> /etc/profile.d/$name-env-vars.sh
     echo "export NETCDF_LIBRARIES=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
+    echo "export NETCDF_LIB=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
     echo "export NETCDF_VERSION=$version" >> /etc/profile.d/$name-env-vars.sh
     echo "export NETCDF_FFLAGS=\"-I$prefix/include\"" >> /etc/profile.d/$name-env-vars.sh
     echo "export NETCDF_CFLAGS=\"-I$prefix/include\"" >> /etc/profile.d/$name-env-vars.sh

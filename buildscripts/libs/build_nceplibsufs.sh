@@ -139,8 +139,12 @@ if [ "$MODULES" == false ]; then
         [[ -f /etc/profile.d/$libname-env-vars.sh ]] && rm -rf /etc/profile.d/$libname-env-vars.sh
         echo "export bacio_VER=$version" >> /etc/profile.d/$libname-env-vars.sh
         echo "export bacio_SRC=$pkgdir/$software" >> /etc/profile.d/$libname-env-vars.sh
-        echo "export bacio_LIB4=$prefix/$libdir/lib${libdir}_4.a" >> /etc/profile.d/$libname-env-vars.sh
-        echo "export bacio_LIB8=$prefix/$libdir/lib${libdir}_8.a" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export bacio_LIB4=$prefix/$libdir/lib${libname}_4.a" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export bacio_LIB8=$prefix/$libdir/lib${libname}_8.a" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export BACIO_VER=$version" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export BACIO_SRC=$pkgdir/$software" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export BACIO_LIB4=$prefix/$libdir/lib${libname}_4.a" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export BACIO_LIB8=$prefix/$libdir/lib${libname}_8.a" >> /etc/profile.d/$libname-env-vars.sh
     fi
 
     libname="bufr"
@@ -149,13 +153,13 @@ if [ "$MODULES" == false ]; then
         [[ -f /etc/profile.d/$libname-env-vars.sh ]] && rm -rf /etc/profile.d/$libname-env-vars.sh
         echo "export bufr_VER=$version" >> /etc/profile.d/$libname-env-vars.sh
         echo "export bufr_SRC=$pkgdir/$software" >> /etc/profile.d/$libname-env-vars.sh
-        echo "export bufr_LIB4=$prefix/$libdir/lib/lib${libdir}_4_64.a" >> /etc/profile.d/$libname-env-vars.sh
-        echo "export bufr_LIB8=$prefix/$libdir/lib/lib${libdir}_8_64.a" >> /etc/profile.d/$libname-env-vars.sh
-        echo "export bufr_LIBd=$prefix/$libdir/lib/lib${libdir}_d_64.a" >> /etc/profile.d/$libname-env-vars.sh
-        echo "export bufr_LIBs=$prefix/$libdir/lib/lib${libdir}_s_64.a" >> /etc/profile.d/$libname-env-vars.sh
-        echo "export bufr_LIB4_DA=$prefix/$libdir/lib/lib${libdir}_4_64_DA.a" >> /etc/profile.d/$libname-env-vars.sh
-        echo "export bufr_LIB8_DA=$prefix/$libdir/lib/lib${libdir}_8_64_DA.a" >> /etc/profile.d/$libname-env-vars.sh
-        echo "export bufr_LIBd_DA=$prefix/$libdir/lib/lib${libdir}_d_64_DA.a" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export bufr_LIB4=$prefix/$libdir/lib/lib${libname}_4_64.a" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export bufr_LIB8=$prefix/$libdir/lib/lib${libname}_8_64.a" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export bufr_LIBd=$prefix/$libdir/lib/lib${libname}_d_64.a" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export bufr_LIBs=$prefix/$libdir/lib/lib${libname}_s_64.a" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export bufr_LIB4_DA=$prefix/$libdir/lib/lib${libname}_4_64_DA.a" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export bufr_LIB8_DA=$prefix/$libdir/lib/lib${libname}_8_64_DA.a" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export bufr_LIBd_DA=$prefix/$libdir/lib/lib${libname}_d_64_DA.a" >> /etc/profile.d/$libname-env-vars.sh
     fi
 
     libname="crtm"
@@ -165,7 +169,7 @@ if [ "$MODULES" == false ]; then
         echo "export CRTM_VER=$version" >> /etc/profile.d/$libname-env-vars.sh
         echo "export CRTM_SRC=$pkgdir/$software" >> /etc/profile.d/$libname-env-vars.sh
         echo "export CRTM_INC=$prefix/$libdir/include" >> /etc/profile.d/$libname-env-vars.sh
-        echo "export CRTM_LIB=$prefix/$libdir/lib/lib${libdir}.a" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export CRTM_LIB=$prefix/$libdir/lib/lib${libname}.a" >> /etc/profile.d/$libname-env-vars.sh
         # I'm sure this doesn't work as the fix files need to be built in separate process
         echo "export CRTM_FIX=$pkgdir/$software" >> /etc/profile.d/$libname-env-vars.sh
     fi
@@ -176,8 +180,8 @@ if [ "$MODULES" == false ]; then
         [[ -f /etc/profile.d/$libname-env-vars.sh ]] && rm -rf /etc/profile.d/$libname-env-vars.sh
         echo "export G2_VER=$version" >> /etc/profile.d/$libname-env-vars.sh
         echo "export G2_SRC=$pkgdir/$software" >> /etc/profile.d/$libname-env-vars.sh
-        echo "export G2_LIB4=$prefix/$libdir/lib/lib${libdir}_4.a" >> /etc/profile.d/$libname-env-vars.sh
-        echo "export G2_LIBd=$prefix/$libdir/lib/lib${libdir}_d.a" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export G2_LIB4=$prefix/$libdir/lib/lib${libname}_4.a" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export G2_LIBd=$prefix/$libdir/lib/lib${libname}_d.a" >> /etc/profile.d/$libname-env-vars.sh
         echo "export G2_INC4=$prefix/$libdir/include_4" >> /etc/profile.d/$libname-env-vars.sh
         echo "export G2_INCd=$prefix/$libdir/include_d" >> /etc/profile.d/$libname-env-vars.sh
     fi

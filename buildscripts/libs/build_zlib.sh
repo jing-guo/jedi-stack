@@ -61,7 +61,7 @@ if [ "$MODULES" == false ]; then
     echo "export ZLIB_LIBRARIES=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
     echo "export ZLIB_VERSION=$version" >> /etc/profile.d/$name-env-vars.sh
     echo "export Z_INC==$prefix/include" >> /etc/profile.d/$name-env-vars.sh
-    echo "export Z_LIB=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
+    echo "export Z_LIB=$prefix/libz.a" >> /etc/profile.d/$name-env-vars.sh
     echo "export Z_VER=$version" >> /etc/profile.d/$name-env-vars.sh
     echo "export Z_SRC=${JEDI_STACK_ROOT}/${PKGDIR:-"pkg"}/$software" >> /etc/profile.d/$name-env-vars.sh
 fi
