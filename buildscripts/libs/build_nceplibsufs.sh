@@ -143,8 +143,8 @@ if [ "$MODULES" == false ]; then
         echo "export bacio_LIB8=$prefix/$libdir/lib${libname}_8.a" >> /etc/profile.d/$libname-env-vars.sh
         echo "export BACIO_VER=$version" >> /etc/profile.d/$libname-env-vars.sh
         echo "export BACIO_SRC=$pkgdir/$software" >> /etc/profile.d/$libname-env-vars.sh
-        echo "export BACIO_LIB4=$prefix/$libdir/lib${libname}_4.a" >> /etc/profile.d/$libname-env-vars.sh
-        echo "export BACIO_LIB8=$prefix/$libdir/lib${libname}_8.a" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export BACIO_LIB4=$prefix/$libdir/lib/lib${libname}_4.a" >> /etc/profile.d/$libname-env-vars.sh
+        echo "export BACIO_LIB8=$prefix/$libdir/lib/lib${libname}_8.a" >> /etc/profile.d/$libname-env-vars.sh
     fi
 
     libname="bufr"

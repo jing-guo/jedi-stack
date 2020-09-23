@@ -64,6 +64,6 @@ if [ "$MODULES" == false ]; then
     echo "export PNG_INC=$prefix/include" >> /etc/profile.d/$name-env-vars.sh
     echo "export PNG_LIBRARIES=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
     echo "export PNG_LIBDIR=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
-    echo "export PNG_LIB=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
+    echo "export PNG_LIB=$prefix/lib/libpng.a" >> /etc/profile.d/$name-env-vars.sh
     echo "export PNG_VERSION=$version" >> /etc/profile.d/$name-env-vars.sh
 fi
