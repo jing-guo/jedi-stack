@@ -9,6 +9,7 @@ export JEDI_COMPILER="intel/18.0.5"
 export JEDI_MPI="impi/18.0.5"
 source /opt/intel/compilers_and_libraries/linux/bin/compilervars.sh intel64
 source /opt/intel/compilers_and_libraries/linux/mpi/bin64/mpivars.sh
+source /opt/intel/compilers_and_libraries/linux/mkl/bin/mklvars.sh intel64
 export PATH=/usr/local/bin:$PATH
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 export LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH

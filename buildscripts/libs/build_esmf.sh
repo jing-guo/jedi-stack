@@ -99,7 +99,7 @@ export ESMF_INSTALL_MODDIR=mod
 export ESMF_ABI=64
 
 if [ "$MODULES" == false ]; then
-  export ESMF_LAPACK=mkl
+  export ESMF_LAPACK=netlib
   export ESMF_LAPACK_LIBPATH=/usr/local/lib
   export ESMF_NETCDF=standard
   export ESMF_NETCDF_INCLUDE=/usr/local/include

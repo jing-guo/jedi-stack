@@ -63,5 +63,6 @@ if [ "$MODULES" == false ]; then
     echo "export LAPACK_PATH=$prefix" >> /etc/profile.d/$name-env-vars.sh
     echo "export LAPACK_INCLUDES=$prefix/include" >> /etc/profile.d/$name-env-vars.sh
     echo "export LAPACK_LIBRARIES=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
+    echo "export LAPACK_LIBDIR=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
     echo "export LAPACK_VERSION=$version" >> /etc/profile.d/$name-env-vars.sh
 fi

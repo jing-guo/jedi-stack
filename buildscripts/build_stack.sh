@@ -93,7 +93,7 @@ build_lib GITLFS git-lfs 2.11.0
 
 #----------------------
 # These must be rebuilt for each MPI implementation
-build_lib HDF5 hdf5 1.12.0
+build_lib HDF5 hdf5 1.10.6
 build_lib PNETCDF pnetcdf 1.12.1
 build_lib NETCDF netcdf 4.7.4 4.5.3 4.3.0
 build_lib NCCMP nccmp 1.8.7.0
@@ -108,7 +108,7 @@ build_lib ODC odc jcsda 1.0.3
 
 #----------------------
 # MPI-independent
-build_lib JASPER jasper 1.900.1
+build_lib JASPER jasper 2.0.15
 build_lib ARMADILLO armadillo 1.900.1
 build_lib XERCES xerces 3.1.4
 build_lib NCEPLIBS nceplibs fv3
@@ -128,7 +128,7 @@ build_lib PIO pio 2.5.1
 build_lib FFTW fftw 3.3.8
 build_lib BOOST_FULL boost 1.68.0
 build_lib ESMF esmf 8_0_1
-[[ -z BUILD_STACK_NCEPLIBS_UFS ]] || build_lib NCEPLIBS_UFS nceplibsufs develop develop
+[[ -z BUILD_STACK_NCEPLIBS_UFS ]] || build_lib NCEPLIBS_UFS nceplibsufs develop
 build_lib BASELIBS baselibs 5.2.2
 build_lib PDTOOLKIT pdtoolkit 3.25.1
 build_lib TAU2 tau2 3.25.1
