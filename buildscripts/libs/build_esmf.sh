@@ -99,8 +99,8 @@ export ESMF_ABI=64
 
 software="ESMF_$version"
 if [ "$MODULES" == false ]; then
-  export ESMF_LAPACK=netlib
-  export ESMF_LAPACK_LIBPATH=/usr/local/lib
+#  export ESMF_LAPACK=netlib
+#  export ESMF_LAPACK_LIBPATH=/usr/local/lib
   export ESMF_NETCDF=standard
   export ESMF_NETCDF_INCLUDE=/usr/local/include
   export ESMF_NETCDF_LIBPATH=/usr/local/lib
@@ -109,9 +109,9 @@ if [ "$MODULES" == false ]; then
   export ESMF_PNETCDF_INCLUDE=/usr/local/include
   export ESMF_PNETCDF_LIBPATH=/usr/local/lib
   export ESMF_PIO=internal
-  export ESMF_XERCES=standard
-  export ESMF_XERCES_INCLUDE=/usr/local/include
-  export ESMF_XERCES_LIBPATH=/usr/local/lib
+#  export ESMF_XERCES=standard
+#  export ESMF_XERCES_INCLUDE=/usr/local/include
+#  export ESMF_XERCES_LIBPATH=/usr/local/lib
   export ESMF_DIR=${JEDI_STACK_ROOT}/${PKGDIR:-"pkg"}/$software
   export ESMF_PREFIX=/usr/local
   export ESMF_COMM=intelmpi
