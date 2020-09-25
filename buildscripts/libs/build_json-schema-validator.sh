@@ -13,7 +13,7 @@ if $MODULES; then
     source $MODULESHOME/init/bash
     module load jedi-$JEDI_COMPILER
     module try-load cmake
-    module load json
+    module try-load json
     module list
     set -x
 
