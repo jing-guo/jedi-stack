@@ -80,7 +80,7 @@ if [ "$MODULES" == false ]; then
     echo "export JASPER_INC=$prefix/include/jasper" >> /etc/profile.d/$name-env-vars.sh
     echo "export JASPER_LIBRARIES=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
     echo "export JASPER_LIBDIR=$prefix/lib" >> /etc/profile.d/$name-env-vars.sh
-    echo "export JASPER_LIB=$prefix/lib/libjasper.a" >> /etc/profile.d/$name-env-vars.sh
+    echo "export JASPER_LIB=$prefix/lib/libjasper.so" >> /etc/profile.d/$name-env-vars.sh
     echo "export JASPER_VERSION=$version" >> /etc/profile.d/$name-env-vars.sh
     echo "export JASPER_VER=$version" >> /etc/profile.d/$name-env-vars.sh
 fi

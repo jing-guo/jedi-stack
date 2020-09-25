@@ -41,8 +41,6 @@ else
   [ -f /etc/profile.d/pnetcdf-env-vars.sh ] && source /etc/profile.d/pnetcdf-env-vars.sh
   [ -f /etc/profile.d/netcdf-env-vars.sh ] && source /etc/profile.d/netcdf-env-vars.sh
   [ -f /etc/profile.d/udunits-env-vars.sh ] && source /etc/profile.d/udunits-env-vars.sh
-  [ -f /etc/profile.d/xerces-env-vars.sh ] && source /etc/profile.d/xerces-env-vars.sh
-  [ -f /etc/profile.d/lapack-env-vars.sh ] && source /etc/profile.d/lapack-env-vars.sh
   [ -f /etc/profile.d/pio-env-vars.sh ] && source /etc/profile.d/pio-env-vars.sh
 fi
 
@@ -98,6 +96,8 @@ export ESMF_INSTALL_LIBDIR=lib
 export ESMF_INSTALL_MODDIR=mod
 export ESMF_ABI=64
 
+
+software="ESMF_$version"
 if [ "$MODULES" == false ]; then
   export ESMF_LAPACK=netlib
   export ESMF_LAPACK_LIBPATH=/usr/local/lib
@@ -112,7 +112,7 @@ if [ "$MODULES" == false ]; then
   export ESMF_XERCES=standard
   export ESMF_XERCES_INCLUDE=/usr/local/include
   export ESMF_XERCES_LIBPATH=/usr/local/lib
-  export ESMF_DIR=/usr/local/jedi-stack/pkg/esmf/8.0.1_parallel/src/8_0_1_parallel
+  export ESMF_DIR=$prefix/$software
   export ESMF_PREFIX=/usr/local
   export ESMF_COMM=intelmpi
   export ESMF_COMPILER=intel
@@ -125,7 +125,6 @@ gitURL="https://github.com/esmf-org/esmf"
 
 cd ${JEDI_STACK_ROOT}/${PKGDIR:-"pkg"}
 
-software="ESMF_$version"
 [[ -d $software ]] || ( git clone -b $software $gitURL $software )
 [[ ${DOWNLOAD_ONLY} =~ [yYtT] ]] && exit 0
 [[ -d $software ]] && cd $software || ( echo "$software does not exist, ABORT!"; exit 1 )
