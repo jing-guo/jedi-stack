@@ -80,5 +80,5 @@ export          STACK_BUILD_CGAL=N
 export          STACK_BUILD_GEOS=N
 export        STACK_BUILD_SQLITE=N
 export          STACK_BUILD_PROJ=N
-export          STACK_BUILD_JSON=Y
-export STACK_BUILD_JSON_SCHEMA_VALIDATOR=Y
+export          STACK_BUILD_JSON=N
+export STACK_BUILD_JSON_SCHEMA_VALIDATOR=N
