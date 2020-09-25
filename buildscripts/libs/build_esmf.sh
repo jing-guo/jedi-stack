@@ -112,7 +112,7 @@ if [ "$MODULES" == false ]; then
   export ESMF_XERCES=standard
   export ESMF_XERCES_INCLUDE=/usr/local/include
   export ESMF_XERCES_LIBPATH=/usr/local/lib
-  export ESMF_DIR=$prefix/$software
+  export ESMF_DIR=${JEDI_STACK_ROOT}/${PKGDIR:-"pkg"}/$software
   export ESMF_PREFIX=/usr/local
   export ESMF_COMM=intelmpi
   export ESMF_COMPILER=intel
