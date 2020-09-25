@@ -39,7 +39,12 @@ url="https://github.com/pboettch/json-schema-validator/archive/$tarfile"
 mkdir -p build && cd build
 
 echo nlohmann_json_DIR=$nlohmann_json_DIR
-cmake .. -DCMAKE_INSTALL_PREFIX=$prefix -DBUILD_TESTS=$MAKE_CHECK -DBUILD_EXAMPLES=N
+cmake .. \
+      -DCMAKE_INSTALL_PREFIX=$prefix \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=Y \
+      -DBUILD_TESTS=$MAKE_CHECK \
+      -DBUILD_EXAMPLES=N
 [[ $MAKE_CHECK =~ [yYtT] ]] && make test
 $SUDO make install
 
