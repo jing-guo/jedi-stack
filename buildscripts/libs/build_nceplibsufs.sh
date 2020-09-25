@@ -103,7 +103,7 @@ rm -rf $prefix/wgrib2
 rm -rf $prefix/wrf_io
 
 gitURL="https://github.com/NOAA-EMC/NCEPLIBS.git"
-software=name-$version
+software=$name-$version
 [[ -d $software ]] || ( git clone -b $version $gitURL $software )
 [[ -d $software ]] && cd $software || ( echo "$software does not exist, ABORT!"; exit 1 )
 [[ -d build ]] && rm -rf build
