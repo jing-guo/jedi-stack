@@ -21,6 +21,7 @@ if $MODULES; then
   module load jedi-$JEDI_COMPILER
   module load jedi-$JEDI_MPI
   module load netcdf
+  module try-load ecbuild
   module list
   set -x
 
@@ -52,11 +53,15 @@ software=$name-$version
 [[ -d build ]] && rm -rf build
 mkdir -p build && cd build
 
+if [[ ${source} == jcsda ]]; then
+  extra_conf="-DCMAKE_MODULE_PATH=${ECBUILD_DIR}"
+fi
+
 cmake .. \
       -DCMAKE_INSTALL_PREFIX=$prefix \
       -D32BIT=ON -D64BIT=ON \
       -DGFS_PHYS=ON \
-      -DLARGEFILE=ON
+      -DLARGEFILE=ON ${extra_conf}
 VERBOSE=$MAKE_VERBOSE make -j${NTHREADS:-4}
 [[ $MAKE_CHECK =~ [yYtT] ]] && make check
 $SUDO make install
