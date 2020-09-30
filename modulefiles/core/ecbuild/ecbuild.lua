@@ -16,6 +16,7 @@ local base = pathJoin(opt,"core",pkgName,pkgVersion)
 prepend_path("PATH", pathJoin(base,"bin"))
 
 setenv("ECBUILD_PATH",base)
+setenv("ECBUILD_DIR", pathJoin(base,"share/ecbuild/cmake"))
 
 whatis("Name: ".. pkgName)
 whatis("Version: " .. pkgVersion)
