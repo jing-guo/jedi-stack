@@ -115,7 +115,7 @@ build_lib NCEPLIBS nceplibs fv3
 build_lib TKDIFF tkdirr 4.3.5
 build_lib PYJEDI pyjedi
 build_lib PYBIND11 pybind11 2.5.0
-build_lib GSL_LITE gsl_lite 0.37.0
+build_lib GSL_LITE gsl_lite 0.34.0
 build_lib GEOS geos 3.8.1
 build_lib SQLITE sqlite 3.32.3
 build_lib PROJ proj 7.1.0
@@ -132,6 +132,7 @@ build_lib ESMF esmf 8_0_1
 build_lib BASELIBS baselibs 5.2.2
 build_lib PDTOOLKIT pdtoolkit 3.25.1
 build_lib TAU2 tau2 3.25.1
+build_lib FMS fms jcsda release-stable
 
 # ===============================================================================
 # optionally clean up
